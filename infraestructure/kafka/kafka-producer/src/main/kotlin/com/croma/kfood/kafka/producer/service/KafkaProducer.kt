@@ -11,7 +11,7 @@ import java.io.Serializable
 import java.util.function.BiConsumer
 
 interface KafkaProducer<K : Serializable?, V : SpecificRecordBase?> {
-    fun send(topicName: String, key: K, message: V, callback: BiConsumer<SendResult<K, V>, Throwable>)
+    fun send(topicName: String, key: K, message: V, callback: BiConsumer<SendResult<K, V>, Throwable?>)
 }
 
 @Component
@@ -25,7 +25,7 @@ class KafkaProducerImpl<K : Serializable?, V : SpecificRecordBase?>(
         topicName: String,
         key: K,
         message: V,
-        callback: BiConsumer<SendResult<K, V>, Throwable>
+        callback: BiConsumer<SendResult<K, V>, Throwable?>
     ) {
         logger.info { "Sending message $message to topic $topicName." }
         try {

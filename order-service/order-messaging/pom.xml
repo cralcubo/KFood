@@ -13,6 +13,18 @@
             <groupId>com.croman</groupId>
             <artifactId>order-application-service</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.croman</groupId>
+            <artifactId>kafka-producer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.croman</groupId>
+            <artifactId>kafka-consummer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.croman</groupId>
+            <artifactId>kafka-model</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

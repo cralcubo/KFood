@@ -15,7 +15,7 @@ sealed class OrderEvent(
 
     class Created(order: PendingOrder, createdAt: ZonedDateTime) : OrderEvent(order, createdAt)
 
-    class Cancelling(order: CancellableOrder, createdAt: ZonedDateTime) : OrderEvent(order, createdAt)
+    class Cancelled(order: CancellableOrder, createdAt: ZonedDateTime) : OrderEvent(order, createdAt)
 }
 
 

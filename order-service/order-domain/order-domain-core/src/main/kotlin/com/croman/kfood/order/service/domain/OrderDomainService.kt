@@ -22,7 +22,7 @@ interface OrderDomainService {
 
     fun approveOrder(order: PaidOrder)
 
-    fun cancelOrderPayment(order: PaidOrder, failureMessages: List<String>): OrderEvent.Cancelling
+    fun cancelOrderPayment(order: PaidOrder, failureMessages: List<String>): OrderEvent.Cancelled
 
     fun cancelOrder(order: CancellableOrder, failureMessages: List<String>)
 }
@@ -47,20 +47,20 @@ class OrderDomainServiceImpl: OrderDomainService {
     }
 
     override fun payOrder(order: PendingOrder): OrderEvent.Paid {
-        val paidOrder = order.pay()
+        val paidOrder = order.payOrder()
         logger.info { "Order $paidOrder was paid" }
         return OrderEvent.Paid(paidOrder, now)
     }
 
     override fun approveOrder(order: PaidOrder) {
-        val approvedOrder = order.approve()
+        val approvedOrder = order.approveOrder()
         logger.info { "Order was approved $approvedOrder" }
     }
 
-    override fun cancelOrderPayment(order: PaidOrder, failureMessages: List<String>): OrderEvent.Cancelling {
+    override fun cancelOrderPayment(order: PaidOrder, failureMessages: List<String>): OrderEvent.Cancelled {
         val cancellingOrder = order.initCancelling(failureMessages)
         logger.info { "Order $cancellingOrder is cancelling" }
-        return OrderEvent.Cancelling(cancellingOrder, now)
+        return OrderEvent.Cancelled(cancellingOrder, now)
     }
 
     override fun cancelOrder(

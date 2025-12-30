@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0</version>
+        <version>3.5.8</version>
         <relativePath/>
     </parent>
     <!-- This is pom instead of the default jar, because this is the project container -->
@@ -102,6 +102,11 @@
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.github.oshai</groupId>
             <artifactId>kotlin-logging-jvm</artifactId>
             <version>7.0.3</version>
@@ -121,6 +126,7 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
+                
                 <executions>
                     <execution>
                         <id>compile</id>

@@ -8,13 +8,21 @@ import java.util.*
 class OrderItem private constructor(
     val id: OrderItemId,
     val product: Product,
-    private val quantity: Int
+    val quantity: Int
 ) : BaseEntity<OrderItemId>(id) {
 
     companion object {
-        fun of(product: Product, quantity: Int) =
-            OrderItem(
+        
+        fun create(product: Product, quantity: Int) =
+            instantiate(
                 id = OrderItemId(UUID.randomUUID()),
+                product = product,
+                quantity = quantity
+            )
+
+        fun instantiate(id: OrderItemId, product: Product, quantity: Int) =
+            OrderItem(
+                id = id,
                 product = product,
                 quantity = quantity
             )
@@ -29,10 +37,9 @@ class OrderItem private constructor(
     fun updateProduct(product: Product) =
         copy(product = product)
 
-
     fun copy(
         product: Product = this.product,
         quantity: Int = this.quantity,
-    ) = of(product, quantity)
+    ) = create(product, quantity)
 
 }

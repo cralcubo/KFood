@@ -3,5 +3,4 @@ package com.croman.kfood.order.service.domain.ports.output.message.publisher.pay
 import com.croman.kfood.domain.event.publisher.DomainEventPublisher
 import com.croman.kfood.order.service.domain.event.OrderEvent
 
-interface OrderCancelledPaymentRequestMessagePublisher: DomainEventPublisher<OrderEvent.Cancelling> {
-}
+interface OrderCancelledPaymentRequestMessagePublisher: DomainEventPublisher<OrderEvent.Cancelled>

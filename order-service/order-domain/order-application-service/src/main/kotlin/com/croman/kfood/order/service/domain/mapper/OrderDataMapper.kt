@@ -8,7 +8,6 @@ import com.croman.kfood.order.service.domain.dto.create.CreateOrderResponse
 import com.croman.kfood.order.service.domain.dto.create.OrderAddress
 import com.croman.kfood.order.service.domain.dto.track.TrackOrderResponse
 import com.croman.kfood.order.service.domain.entity.ApprovedOrder
-import com.croman.kfood.order.service.domain.entity.CancellableOrder
 import com.croman.kfood.order.service.domain.entity.CancelledOrder
 import com.croman.kfood.order.service.domain.entity.CancellingOrder
 import com.croman.kfood.order.service.domain.entity.Order
@@ -25,7 +24,7 @@ class OrderDataMapper {
      * to create one.
      */
     fun createOrder(command: CreateOrderCommand) = with(command) {
-        PendingOrder.of(
+        PendingOrder.create(
             customerId = CustomerId(customerId),
             restaurantId = RestaurantId(restaurantId),
             streetAddress = address.toStreetAddress()
@@ -62,7 +61,7 @@ class OrderDataMapper {
         }
 
     private fun OrderAddress.toStreetAddress() =
-        StreetAddress(
+        StreetAddress.of(
             street = street,
             postalCode = postalCode,
             city = city

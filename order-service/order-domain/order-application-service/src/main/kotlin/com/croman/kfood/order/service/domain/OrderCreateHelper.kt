@@ -39,7 +39,7 @@ class OrderCreateHelper(
         val orderItems = command.items
             .mapNotNull {
                 availableProducts[it.productId]?.let { product ->
-                    OrderItem.of(product, it.quantity)
+                    OrderItem.create(product, it.quantity)
                 }
             }
         orderRepository.save(order)

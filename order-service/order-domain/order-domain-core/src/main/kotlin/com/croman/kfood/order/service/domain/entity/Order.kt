@@ -9,89 +9,123 @@ import com.croman.kfood.order.service.domain.valueobject.StreetAddress
 import com.croman.kfood.order.service.domain.valueobject.TrackingId
 import java.util.*
 
-sealed interface Order {
-    val trackingId: TrackingId
+sealed class Order(
+    val trackingId: TrackingId,
+    val id: OrderId,
+    val customerId: CustomerId, // aggregate
+    val restaurantId: RestaurantId, // aggregate
+    val streetAddress: StreetAddress, // entity
+    val orderItems: List<OrderItem>
+) : AggregateRoot<OrderId>(id) {
+
+    val price: Money
+        get() = orderItems.map { it.price }
+            .reduce { acc, money -> acc.add(money) }
 }
 
-interface CancellableOrder : Order {
-    fun cancelOrder(failureMessages: List<String>): CancelledOrder
+sealed class CancellableOrder(
+    trackingId: TrackingId,
+    id: OrderId,
+    customerId: CustomerId, // aggregate
+    restaurantId: RestaurantId, // aggregate
+    streetAddress: StreetAddress,
+    items: List<OrderItem>,
+) : Order(trackingId, id, customerId, restaurantId, streetAddress, items) {
+
+    abstract fun cancelOrder(failureMessages: List<String>): CancelledOrder
+
 }
 
-class PaidOrder(override val trackingId: TrackingId,) : Order {
-    fun approve() =
-        ApprovedOrder(trackingId)
+class PaidOrder(order: PendingOrder) :
+    Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems) {
+
+    fun approveOrder() =
+        ApprovedOrder(this)
 
     fun initCancelling(failureMessages: List<String>) =
-        CancellingOrder(trackingId, failureMessages)
+        CancellingOrder(this, failureMessages)
 }
 
-class ApprovedOrder(override val trackingId: TrackingId,) : Order
+class ApprovedOrder(order: PaidOrder) :
+    Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems)
 
 class CancellingOrder(
-    override val trackingId: TrackingId,
+    paidOrder: PaidOrder,
     val failureMessages: List<String>
-) : Order, CancellableOrder {
+) : CancellableOrder(
+    paidOrder.trackingId,
+    paidOrder.id,
+    paidOrder.customerId,
+    paidOrder.restaurantId,
+    paidOrder.streetAddress,
+    paidOrder.orderItems,
+) {
 
     override fun cancelOrder(failureMessages: List<String>) =
-        CancelledOrder(trackingId, failureMessages + this.failureMessages)
+        CancelledOrder(this, failureMessages + this.failureMessages)
 }
 
 class CancelledOrder(
-    override val trackingId: TrackingId,
-    val failureMessages: List<String>
-) : Order
+    val order: CancellableOrder,
+    val failureMessages: List<String>,
+) : Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems)
 
 class PendingOrder private constructor(
-    val id: OrderId,
-    private val customerId: CustomerId, // aggregate
-    private val restaurantId: RestaurantId, // aggregate
-    private val streetAddress: StreetAddress, // entity
-
-    val items: List<OrderItem> = emptyList(),
-    override val trackingId: TrackingId = TrackingId(UUID.randomUUID()),
-    private val price: Money = Money.ZERO,
+    id: OrderId,
+    customerId: CustomerId, // aggregate
+    restaurantId: RestaurantId, // aggregate
+    streetAddress: StreetAddress, // entity
+    trackingId: TrackingId,
+    items: List<OrderItem>,
     private val failureMessages: List<String> = emptyList()
-) : AggregateRoot<OrderId>(id), Order, CancellableOrder {
+) : CancellableOrder(trackingId, id, customerId, restaurantId, streetAddress, items) {
 
     companion object {
-        fun of(
+        fun create(
             restaurantId: RestaurantId, customerId: CustomerId,
             streetAddress: StreetAddress
         ) =
-            PendingOrder(
+            instantiate(
                 id = OrderId(UUID.randomUUID()),
                 customerId = customerId,
                 restaurantId = restaurantId,
-                streetAddress = streetAddress
+                streetAddress = streetAddress,
+                trackingId = TrackingId(UUID.randomUUID()),
+                items = emptyList()
+            )
+
+        fun instantiate(id: OrderId,restaurantId: RestaurantId, customerId: CustomerId,
+                        streetAddress: StreetAddress, trackingId: TrackingId, items: List<OrderItem>) =
+            PendingOrder(
+                id = id,
+                customerId = customerId,
+                restaurantId = restaurantId,
+                streetAddress = streetAddress,
+                trackingId = trackingId,
+                items = items
             )
 
     }
 
     fun addItems(items: List<OrderItem>) =
-        copy(items = this.items + items)
+        copy(items = this.orderItems + items)
 
 
-    fun updateItems(items: List<OrderItem>) =
-        copy(items = items)
-
-    fun pay() =
-        PaidOrder(trackingId)
+    fun payOrder() =
+        PaidOrder(this)
 
     override fun cancelOrder(failureMessages: List<String>) =
-        CancelledOrder(trackingId, failureMessages)
+        CancelledOrder(this, failureMessages)
 
     private fun copy(
         customerId: CustomerId = this.customerId,
         restaurantId: RestaurantId = this.restaurantId,
         streetAddress: StreetAddress = this.streetAddress,
-        price: Money = this.price,
-        items: List<OrderItem> = this.items,
+        items: List<OrderItem> = this.orderItems,
         trackingId: TrackingId = this.trackingId,
         failureMessages: List<String> = this.failureMessages
     ) = PendingOrder(
-        id, customerId, restaurantId, streetAddress,  price =price, items = items,
+        id, customerId, restaurantId, streetAddress,  items = items,
         trackingId = trackingId, failureMessages = failureMessages
     )
-
-
 }

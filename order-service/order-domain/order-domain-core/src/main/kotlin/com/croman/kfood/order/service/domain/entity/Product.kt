@@ -7,14 +7,21 @@ import java.util.UUID
 
 class Product private constructor(
     val id: ProductId,
-    private val name: String,
+    val name: String,
     val price: Money
 ) : BaseEntity<ProductId>(id) {
 
     companion object {
-        fun of(name: String, price: Money) =
-            Product(
+        fun create(name: String, price: Money) =
+            instantiate(
                 id = ProductId(UUID.randomUUID()),
+                name = name,
+                price = price
+            )
+
+        fun instantiate(id: ProductId, name: String, price: Money) =
+            Product(
+                id = id,
                 name = name,
                 price = price
             )
