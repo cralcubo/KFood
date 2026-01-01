@@ -34,12 +34,4 @@ class OrderItem private constructor(
     val subTotal: Money
         get() = price.multiply(quantity)
 
-    fun updateProduct(product: Product) =
-        copy(product = product)
-
-    fun copy(
-        product: Product = this.product,
-        quantity: Int = this.quantity,
-    ) = create(product, quantity)
-
 }

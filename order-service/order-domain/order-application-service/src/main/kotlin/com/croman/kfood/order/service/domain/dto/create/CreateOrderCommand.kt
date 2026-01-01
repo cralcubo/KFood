@@ -22,7 +22,7 @@ data class CreateOrderCommand(
     val items: List<OrderItem>,
     val address: OrderAddress,
 
-    val price_shouldBeRemoved: BigDecimal
+    val price_shouldBeRemoved: BigDecimal? = null,
 )
 
 /**
@@ -36,8 +36,8 @@ data class OrderItem(
     val productId: UUID,
     val quantity: Int,
 
-    val subTotal_shouldBeRemoved: BigDecimal,
-    val price_shouldBeRemoved: BigDecimal
+    val subTotal_shouldBeRemoved: BigDecimal? = null,
+    val price_shouldBeRemoved: BigDecimal? = null,
 )
 
 data class OrderAddress(

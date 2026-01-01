@@ -46,7 +46,8 @@ class OrderDataMapper {
     fun toCreateOrderResponse(order: PendingOrder) = with(order) {
         CreateOrderResponse(
             orderTrackingId = trackingId.value,
-            orderStatus = OrderStatus.PENDING
+            orderStatus = OrderStatus.PENDING,
+            message = "Order created successfully",
         )
     }
 

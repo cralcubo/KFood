@@ -19,7 +19,7 @@ sealed class Order(
 ) : AggregateRoot<OrderId>(id) {
 
     val price: Money
-        get() = orderItems.map { it.price }
+        get() = orderItems.map { it.subTotal }
             .reduce { acc, money -> acc.add(money) }
 }
 

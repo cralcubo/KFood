@@ -34,7 +34,7 @@ class OrderDataAccessMapper {
             trackingId = trackingId.value,
             price = price.amount,
             orderStatus = toStatus(),
-            failureMessage = failureMessage(),
+            failureMessages = failureMessage(),
         ).apply {
             address = streetAddress.toEntity(this)
             items = orderItems.map { it.toEntity(this) }
@@ -44,8 +44,8 @@ class OrderDataAccessMapper {
         OrderStatus.PENDING -> toPendingOrder()
         OrderStatus.PAID -> PaidOrder(toPendingOrder())
         OrderStatus.APPROVED -> ApprovedOrder(PaidOrder(toPendingOrder()))
-        OrderStatus.CANCELLED -> CancelledOrder(toPendingOrder(), failureMessage.split(","))
-        OrderStatus.CANCELLING -> CancellingOrder(PaidOrder(toPendingOrder()), failureMessage.split(","))
+        OrderStatus.CANCELLED -> CancelledOrder(toPendingOrder(), failureMessages.split(","))
+        OrderStatus.CANCELLING -> CancellingOrder(PaidOrder(toPendingOrder()), failureMessages.split(","))
     }
 
     private fun OrderEntity.toPendingOrder(): PendingOrder {

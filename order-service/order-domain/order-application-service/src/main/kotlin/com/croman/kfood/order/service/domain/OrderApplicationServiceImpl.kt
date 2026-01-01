@@ -4,17 +4,12 @@ import com.croman.kfood.order.service.domain.dto.create.CreateOrderCommand
 import com.croman.kfood.order.service.domain.dto.create.CreateOrderResponse
 import com.croman.kfood.order.service.domain.dto.track.TrackOrderQuery
 import com.croman.kfood.order.service.domain.dto.track.TrackOrderResponse
-import com.croman.kfood.order.service.domain.entity.OrderItem
 import com.croman.kfood.order.service.domain.entity.PendingOrder
-import com.croman.kfood.order.service.domain.event.OrderEvent
-import com.croman.kfood.order.service.domain.exception.OrderDomainException
 import com.croman.kfood.order.service.domain.exception.OrderNotFoundException
 import com.croman.kfood.order.service.domain.mapper.OrderDataMapper
 import com.croman.kfood.order.service.domain.ports.input.service.OrderApplicationService
 import com.croman.kfood.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
-import com.croman.kfood.order.service.domain.ports.output.repository.CustomerRepository
 import com.croman.kfood.order.service.domain.ports.output.repository.OrderRepository
-import com.croman.kfood.order.service.domain.ports.output.repository.RestaurantRepository
 import com.croman.kfood.order.service.domain.valueobject.TrackingId
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component

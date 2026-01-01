@@ -23,4 +23,11 @@ data class RestaurantEntity(
     val productPrice: BigDecimal,
 )
 
-data class RestaurantEntityId(val restaurantId: UUID, val productId: UUID): Serializable
+/**
+ * Set default values when the class is instantiated without arguments.
+ * Something apparently needed by jpa.
+ */
+data class RestaurantEntityId(
+    val restaurantId: UUID = UUID.randomUUID(),
+    val productId: UUID = UUID.randomUUID()
+): Serializable

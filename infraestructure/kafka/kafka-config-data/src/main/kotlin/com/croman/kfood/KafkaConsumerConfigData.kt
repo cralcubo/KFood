@@ -1,10 +1,8 @@
 package com.croman.kfood
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.context.annotation.Configuration
 
-@Configuration
-@ConfigurationProperties("kafka-consumer-config")
+@ConfigurationProperties(prefix = "kafka-consumer-config")
 data class KafkaConsumerConfigData (
     val keyDeserializer: String,
     val valueDeserializer: String,

@@ -27,7 +27,7 @@ data class OrderEntity(
     val price: BigDecimal,
     @Enumerated(EnumType.STRING)
     val orderStatus: OrderStatus,
-    val failureMessage: String,
+    val failureMessages: String,
 
     @OneToOne(mappedBy = "order", cascade = [CascadeType.ALL])
     var address: OrderAddressEntity? = null,
@@ -53,14 +53,14 @@ data class OrderAddressEntity(
 
 @Table(name = "order_items")
 @Entity
-@IdClass(OrderItemEntity::class)
+@IdClass(OrderItemEntityId::class)
 data class OrderItemEntity(
     @Id
     val id: UUID,
 
     @Id
     @ManyToOne(cascade = [CascadeType.ALL])
-    @JoinColumn(name = "ORDER _ID")
+    @JoinColumn(name = "ORDER_ID")
     val order: OrderEntity,
 
     val productId: UUID,
@@ -69,4 +69,7 @@ data class OrderItemEntity(
     val subTotal: BigDecimal,
 )
 
-data class OrderItemEntityId(val id: UUID, val order: OrderEntity) : Serializable
+data class OrderItemEntityId(
+    val id: UUID? = null,
+    val order: OrderEntity? = null
+) : Serializable

@@ -15,18 +15,23 @@ spring:
   jpa:
     open-in-view: false
     show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+    # Tells Hibernate not to try and create the tables itself
+    hibernate:
+      ddl-auto: none
+    # Important: This ensures the SQL scripts run after the JPA setup is ready
+    defer-datasource-initialization: true
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
     username: postgres
-    password:
+    password: "" # Ensure this is empty or provided if needed
     driver-class-name: org.postgresql.Driver
-    platform: postgres
-    schema: classpath:init-schema.sql
-    initialization-mode: always
+
+  sql:
+    init:
+      # Replaces initialization-mode: always
+      mode: always
+      # Replaces schema: classpath:init-schema.sql
+      schema-locations: classpath:init-schema.sql
 
 kafka-config:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092

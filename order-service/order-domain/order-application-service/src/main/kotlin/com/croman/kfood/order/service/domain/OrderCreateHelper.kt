@@ -9,12 +9,14 @@ import com.croman.kfood.order.service.domain.ports.output.repository.CustomerRep
 import com.croman.kfood.order.service.domain.ports.output.repository.OrderRepository
 import com.croman.kfood.order.service.domain.ports.output.repository.RestaurantRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 
 /**
  * Class with all the Transactional methods here!
  */
+@Component
 class OrderCreateHelper(
     private val orderDomainService: OrderDomainService,
     private val orderRepository: OrderRepository,
@@ -34,7 +36,7 @@ class OrderCreateHelper(
         val restaurant = restaurantRepository.findRestaurant(command.restaurantId)
             ?: throw OrderDomainException("The restaurant ${command.restaurantId} was not found.")
 
-        val order = orderDataMapper.createOrder(command)
+
         val availableProducts = restaurant.products.associateBy { it.id.value }
         val orderItems = command.items
             .mapNotNull {
@@ -42,6 +44,8 @@ class OrderCreateHelper(
                     OrderItem.create(product, it.quantity)
                 }
             }
+
+        val order = orderDataMapper.createOrder(command).addItems(orderItems)
         orderRepository.save(order)
         logger.info { "Order ${order.id} created and persisted" }
 
