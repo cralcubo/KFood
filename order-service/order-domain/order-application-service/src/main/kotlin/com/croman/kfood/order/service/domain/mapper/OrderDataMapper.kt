@@ -58,7 +58,6 @@ class OrderDataMapper {
             is CancellingOrder -> OrderStatus.CANCELLING
             is PaidOrder -> OrderStatus.PAID
             is PendingOrder -> OrderStatus.PENDING
-            else -> error("Unsupported order type")
         }
 
     private fun OrderAddress.toStreetAddress() =

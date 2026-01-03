@@ -11,7 +11,7 @@ sealed class OrderEvent(
     val order: Order,
     val createdAt: ZonedDateTime
 ) : DomainEvent<Order> {
-     class Paid(order: PaidOrder, createdAt: ZonedDateTime) : OrderEvent(order, createdAt)
+    class Paid(order: PaidOrder, createdAt: ZonedDateTime) : OrderEvent(order, createdAt)
 
     class Created(order: PendingOrder, createdAt: ZonedDateTime) : OrderEvent(order, createdAt)
 

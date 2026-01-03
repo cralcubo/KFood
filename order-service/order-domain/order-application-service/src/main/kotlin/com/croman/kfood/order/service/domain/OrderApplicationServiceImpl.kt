@@ -40,6 +40,7 @@ private class OderCreateHandler(
     private val logger = KotlinLogging.logger {}
 
     fun createOrder(command: CreateOrderCommand): CreateOrderResponse {
+        logger.info{"Creating order for customer ${command.customerId}"}
         val event = orderCreateHelper.persistOrder(command)
         orderCreatedEventMessagePublisher.publish(event)
         return orderDataMapper.toCreateOrderResponse(event.order as PendingOrder)

@@ -25,7 +25,6 @@ spring:
     username: postgres
     password: "" # Ensure this is empty or provided if needed
     driver-class-name: org.postgresql.Driver
-
   sql:
     init:
       # Replaces initialization-mode: always

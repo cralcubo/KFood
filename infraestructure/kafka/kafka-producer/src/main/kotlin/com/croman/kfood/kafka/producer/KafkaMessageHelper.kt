@@ -1,11 +1,11 @@
-package com.croman.kfood.order.service.messaging.publisher.kafka
+package com.croman.kfood.kafka.producer
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.apache.avro.specific.SpecificRecordBase
 import org.springframework.kafka.support.SendResult
 import java.util.function.BiConsumer
 
-class OrderKafkaMessageHelper {
+class KafkaMessageHelper {
 
     companion object {
         private val logger = KotlinLogging.logger {}

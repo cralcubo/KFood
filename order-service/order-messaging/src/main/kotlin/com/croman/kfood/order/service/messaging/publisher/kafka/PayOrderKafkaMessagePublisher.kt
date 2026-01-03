@@ -2,7 +2,7 @@ package com.croman.kfood.order.service.messaging.publisher.kafka
 
 import com.croman.kfood.kafka.producer.service.KafkaProducer
 import com.croman.kfood.order.service.messaging.mapper.OrderMessagingDataMapper
-import com.croman.kfood.order.service.messaging.publisher.kafka.OrderKafkaMessageHelper.Companion.kafkaCallback
+import com.croman.kfood.kafka.producer.KafkaMessageHelper.Companion.kafkaCallback
 import com.croman.kfood.kafka.order.avro.model.RestaurantApprovalRequestAvroModel
 import com.croman.kfood.order.service.domain.config.OrderServiceConfigData
 import com.croman.kfood.order.service.domain.event.OrderEvent
