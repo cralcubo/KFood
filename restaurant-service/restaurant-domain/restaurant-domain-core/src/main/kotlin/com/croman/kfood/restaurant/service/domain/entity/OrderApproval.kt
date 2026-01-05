@@ -14,7 +14,7 @@ sealed class OrderApproval private constructor(
     val orderApprovalStatus: OrderApprovalStatus,
 ) : BaseEntity<OrderApprovalId>(id) {
 
-    class Approved(id: OrderApprovalId, restaurantId: RestaurantId, orderId: OrderId):
+    class Approved private constructor(id: OrderApprovalId, restaurantId: RestaurantId, orderId: OrderId):
         OrderApproval(id, restaurantId, orderId, OrderApprovalStatus.APPROVED) {
         companion object {
             fun instantiate(id: OrderApprovalId, restaurantId: RestaurantId, orderId: OrderId) =
@@ -24,7 +24,7 @@ sealed class OrderApproval private constructor(
         }
     }
 
-    class Rejected(id: OrderApprovalId, restaurantId: RestaurantId, orderId: OrderId):
+    class Rejected private constructor(id: OrderApprovalId, restaurantId: RestaurantId, orderId: OrderId):
         OrderApproval(id, restaurantId, orderId, OrderApprovalStatus.REJECTED) {
 
         companion object {
