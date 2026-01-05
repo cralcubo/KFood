@@ -5,8 +5,6 @@ import com.croman.kfood.kafka.producer.KafkaMessageHelper
 import com.croman.kfood.kafka.producer.service.KafkaProducer
 import com.croman.kfood.payment.service.domain.config.PaymentServiceConfigData
 import com.croman.kfood.payment.service.domain.event.PaymentEvent
-import com.croman.kfood.payment.service.domain.port.output.repository.message.publisher.PaymentCancelledMessagePublisher
-import com.croman.kfood.payment.service.domain.port.output.repository.message.publisher.PaymentCompletedMessagePublisher
 import com.croman.kfood.payment.service.domain.port.output.repository.message.publisher.PaymentFailedMessagePublisher
 import com.croman.kfood.payment.service.messaging.mapper.PaymentMessagingDataMapper
 import io.github.oshai.kotlinlogging.KotlinLogging

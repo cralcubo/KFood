@@ -35,7 +35,7 @@ class OrderDataMapper {
         TrackOrderResponse(
             orderTrackingId = trackingId.value,
             orderStatus = order.toOrderStatus(),
-            failureMessages = when(order) {
+            failureMessages = when (order) {
                 is CancellingOrder -> order.failureMessages
                 is CancelledOrder -> order.failureMessages
                 else -> emptyList()

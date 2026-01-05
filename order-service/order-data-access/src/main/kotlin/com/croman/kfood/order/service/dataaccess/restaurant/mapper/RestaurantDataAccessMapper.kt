@@ -3,34 +3,33 @@ package com.croman.kfood.order.service.dataaccess.restaurant.mapper
 import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.ProductId
 import com.croman.kfood.domain.valueobject.RestaurantId
-import com.croman.kfood.dataaccess.restaurant.exception.RestaurantDataAccessException
+import com.croman.kfood.dataaccess.exception.RestaurantDataAccessException
+import com.croman.kfood.dataaccess.entity.RestaurantEntity
 import com.croman.kfood.order.service.domain.entity.Product
 import com.croman.kfood.order.service.domain.entity.Restaurant
-import com.croman.kfood.dataaccess.restaurant.entity.RestaurantEntity
 import org.springframework.stereotype.Component
-import java.util.UUID
 
 @Component
 class RestaurantDataAccessMapper {
 
-    fun Restaurant.toProducts() : List<UUID> =
-        products.map { it.id.value }
-
-
-    fun restaurantEntitiesToRestaurant(restaurantEntity: RestaurantEntity?) : Restaurant {
+    fun restaurantEntityToRestaurant(restaurantEntity: RestaurantEntity?) : Restaurant {
         if(restaurantEntity == null) {
             throw RestaurantDataAccessException("Restaurant Not Found")
         }
 
-        val products = entities.map {
+        val products = restaurantEntity.products.map {
             Product.instantiate(
-                id = ProductId(it.productId),
-                name = it.productName,
-                price = Money(it.productPrice)
+                id = ProductId(it.id),
+                name = it.name,
+                price = Money(it.price),
             )
         }
 
-        return Restaurant.instantiate(RestaurantId(entity.restaurantId), products, entity.restaurantActive)
+        return Restaurant.instantiate(
+            RestaurantId(restaurantEntity.restaurantId),
+            products,
+            restaurantEntity.restaurantActive
+        )
 
     }
 

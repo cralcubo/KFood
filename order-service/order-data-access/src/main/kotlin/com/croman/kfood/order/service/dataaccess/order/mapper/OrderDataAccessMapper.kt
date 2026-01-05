@@ -22,7 +22,6 @@ import com.croman.kfood.order.service.domain.valueobject.StreetAddress
 import com.croman.kfood.order.service.domain.valueobject.TrackingId
 import org.springframework.stereotype.Component
 
-
 @Component
 class OrderDataAccessMapper {
 
@@ -63,7 +62,7 @@ class OrderDataAccessMapper {
     fun OrderItemEntity.toOrderItem() =
         OrderItem.instantiate(
             id = OrderItemId(id),
-            product = Product.instantiate(ProductId(id), "test", Money.ZERO),
+            product = Product.instantiate(ProductId(id), "test", Money.Companion.ZERO),
             quantity = quantity
         )
 

@@ -1,7 +1,7 @@
 package com.croman.kfood.order.service.dataaccess.restaurant.adapter
 
+import com.croman.kfood.dataaccess.repository.RestaurantJpaRepository
 import com.croman.kfood.order.service.dataaccess.restaurant.mapper.RestaurantDataAccessMapper
-import com.croman.kfood.dataaccess.restaurant.repository.RestaurantJpaRepository
 import com.croman.kfood.order.service.domain.entity.Restaurant
 import com.croman.kfood.order.service.domain.ports.output.repository.RestaurantRepository
 import org.springframework.stereotype.Component
@@ -17,6 +17,6 @@ class RestaurantRepositoryImpl(
         val restaurants = jpaRepository.findByRestaurantId(id)
             ?: return null
 
-        return mapper.restaurantEntitiesToRestaurant(restaurants)
+        return mapper.restaurantEntityToRestaurant(restaurants)
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer
 import java.io.Serializable
 
-
 @Configuration
 class KafkaConsumerConfig<K: Serializable, V: SpecificRecordBase>(
     private val kafkaConfigData: KafkaConfigData,

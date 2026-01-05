@@ -5,4 +5,4 @@ import java.util.UUID
 data class TrackOrderQuery(
     val orderTrackingId: UUID,
 
-)
+    )
