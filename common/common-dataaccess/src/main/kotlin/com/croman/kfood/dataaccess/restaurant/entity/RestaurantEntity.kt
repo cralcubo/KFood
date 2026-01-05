@@ -1,6 +1,5 @@
-package com.croman.kfood.order.service.dataaccess.restaurant.entity
+package com.croman.kfood.dataaccess.restaurant.entity
 
-import com.croman.kfood.domain.valueobject.ProductId
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
@@ -21,6 +20,7 @@ data class RestaurantEntity(
     val restaurantActive: Boolean,
     val productName: String,
     val productPrice: BigDecimal,
+    val productAvailable: Boolean,
 )
 
 /**

@@ -7,8 +7,8 @@ import org.springframework.boot.runApplication
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @ConfigurationPropertiesScan(basePackages = ["com.croman.kfood"])
-@EnableJpaRepositories(basePackages = ["com.croman.kfood.order.service.dataaccess"])
-@EntityScan(basePackages = ["com.croman.kfood.order.service.dataaccess"])
+@EnableJpaRepositories(basePackages = ["com.croman.kfood.order.service.dataaccess", "com.croman.kfood.dataaccess"])
+@EntityScan(basePackages = ["com.croman.kfood.order.service.dataaccess", "com.croman.kfood.dataaccess"])
 @SpringBootApplication(scanBasePackages = ["com.croman.kfood"])
 class OrderServiceApplication
 

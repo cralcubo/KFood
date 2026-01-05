@@ -5,72 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70164f3-3640-4b44-ba43-c6e77ce7b994" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/common/common-domain/src/main/kotlin/com/croman/kfood/domain/valueobject/PaymentOrderStatus.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infraestructure/kafka/kafka-producer/src/main/kotlin/com/croman/kfood/kafka/producer/KafkaMessageHelper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-container/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-container/src/main/kotlin/com/croman/kfood/payment/service/domain/BeanConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-container/src/main/kotlin/com/croman/kfood/payment/service/domain/PaymentServiceApplication.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-container/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-container/src/main/resources/init-data.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-container/src/main/resources/init-schema.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditehistory/adapter/CreditHistoryRepositoryImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditehistory/entity/CreditHistoryEntity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditehistory/mapper/CreditHistoryDataMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditehistory/repository/CreditHistoryJpaRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditentry/adapter/CreditEntryRepositoryImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditentry/entity/CreditEntryEntity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditentry/exception/CreditEntryDataAccessException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditentry/mapper/CreditEntryDataAccessMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditentry/repository/CreditEntryJpaRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/payment/adapter/PaymentRepositoryImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/payment/entity/PaymentEntity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/payment/exception/PaymentDataAccessException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/payment/mapper/PaymentDataAccessMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/payment/repository/PaymentJpaRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/PaymentRequestMessageListenerImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/config/PaymentServiceConfigData.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/dto/PaymentRequest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/exception/PaymentApplicationServiceException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/mapper/PaymentDataMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/port/input/message/listener/PaymentRequestMessageListener.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/port/output/repository/CreditEntryRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/port/output/repository/CreditHistoryRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/port/output/repository/PaymentRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/port/output/repository/message/publisher/PaymentCancelledMessagePublisher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/port/output/repository/message/publisher/PaymentCompletedMessagePublisher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/port/output/repository/message/publisher/PaymentFailedMessagePublisher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/PaymentDomainService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/entity/CreditEntry.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/entity/CreditHistory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/entity/Payment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/event/PaymentEvent.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/exception/InsufficientCreditException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/exception/PaymentDomainException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/exception/PaymentNotFoundException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/valueobject/CreditEntryId.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/valueobject/CreditHistoryId.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/valueobject/PaymentId.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core/src/main/kotlin/com/croman/kfood/payment/service/domain/valueobject/TransactionType.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-domain/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-messaging/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-messaging/src/main/kotlin/com/croman/kfood/payment/service/messaging/listener/kafka/PaymentRequestKafkaListener.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-messaging/src/main/kotlin/com/croman/kfood/payment/service/messaging/mapper/PaymentMessagingDataMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-messaging/src/main/kotlin/com/croman/kfood/payment/service/messaging/publisher/kafka/PaymentCancelledKafkaMessagePublisher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-messaging/src/main/kotlin/com/croman/kfood/payment/service/messaging/publisher/kafka/PaymentCompletedKafkaMessagePublisher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-messaging/src/main/kotlin/com/croman/kfood/payment/service/messaging/publisher/kafka/PaymentFailedKafkaMessagePublisher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/common-domain/src/main/kotlin/com/croman/kfood/domain/valueobject/PaymentStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/common-domain/src/main/kotlin/com/croman/kfood/domain/valueobject/PaymentStatus.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-container/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-container/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/OrderApplicationServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/OrderApplicationServiceImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/mapper/OrderDataMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/mapper/OrderDataMapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-domain/order-domain-core/src/main/kotlin/com/croman/kfood/order/service/domain/event/OrderEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-domain/order-domain-core/src/main/kotlin/com/croman/kfood/order/service/domain/event/OrderEvent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-messaging/src/main/kotlin/com/croman/kfood/order/service/messaging/publisher/kafka/CancelOrderKafkaMessagePublisher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-messaging/src/main/kotlin/com/croman/kfood/order/service/messaging/publisher/kafka/CancelOrderKafkaMessagePublisher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-messaging/src/main/kotlin/com/croman/kfood/order/service/messaging/publisher/kafka/CreateOrderKafkaMessagePublisher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-messaging/src/main/kotlin/com/croman/kfood/order/service/messaging/publisher/kafka/CreateOrderKafkaMessagePublisher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-messaging/src/main/kotlin/com/croman/kfood/order/service/messaging/publisher/kafka/OrderKafkaMessageHelper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-messaging/src/main/kotlin/com/croman/kfood/order/service/messaging/publisher/kafka/PayOrderKafkaMessagePublisher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-messaging/src/main/kotlin/com/croman/kfood/order/service/messaging/publisher/kafka/PayOrderKafkaMessagePublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/common-dataaccess/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/common-domain/src/main/kotlin/com/croman/kfood/domain/valueobject/RestaurantOrderStatus.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/resources/META-INF/maven/archetype.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/resources/archetype-resources/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/resources/archetype-resources/src/main/java/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/resources/archetype-resources/src/test/java/AppTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/dataaccess/restaurant/entity/OrderApprovalEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/RestaurantApprovalRequestMessageListenerImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/config/RestaurantServiceConfigData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/dto/RestaurantApprovalRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/exception/RestaurantApplicationServiceException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/exception/RestaurantNotFoundException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/ports/input/message/listener/RestaurantApprovalRequestMessageListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/ports/output/message/publisher/OrderApprovedMessagePublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/ports/output/message/publisher/OrderRejectedMessagePublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/ports/output/repository/OrderApprovalRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/service/domain/ports/output/repository/RestaurantRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/RestaurantDomainService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/entity/OrderApproval.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/entity/OrderDetail.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/entity/Product.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/entity/Restaurant.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/event/OrderApprovalEvent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/exception/RestaurantDomainException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/valueobject/OrderApprovalId.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/resources/META-INF/maven/archetype.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/resources/archetype-resources/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/resources/archetype-resources/src/main/java/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/resources/archetype-resources/src/test/java/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-container/src/main/kotlin/com/croman/kfood/order/service/domain/OrderServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-container/src/main/kotlin/com/croman/kfood/order/service/domain/OrderServiceApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-data-access/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-data-access/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant/adapter/RestaurantRepositoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant/adapter/RestaurantRepositoryImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant/entity/RestaurantEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/common-dataaccess/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/entity/RestaurantEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant/exception/RestaurantDataAccessException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/common-dataaccess/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/exception/RestaurantDataAccessException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant/mapper/RestaurantDataAccessMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant/mapper/RestaurantDataAccessMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant/repository/RestaurantJpaRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/common-dataaccess/src/main/kotlin/com/croman/kfood/dataaccess/restaurant/repository/RestaurantJpaRepository.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,8 +59,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Enum" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Enum" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
       </list>
@@ -130,11 +108,11 @@
       <recent name="com.croman.kfood.payment.service.messaging.publisher.kafka" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.croman.kfood.restaurant.repository" />
+      <recent name="com.croman.kfood.restaurant.exception" />
+      <recent name="com.croman.kfood.restaurant.entity" />
       <recent name="com.croman.kfood.kafka.producer" />
       <recent name="com.croman.kfood.payment.service.dataaccess.payment.mapper" />
-      <recent name="com.croman.kfood.order.service.domain" />
-      <recent name="com.croman.kfood.order.service.dataaccess.customer.entity" />
-      <recent name="com.croman.kfood.order.service.dataaccess.customer.repository" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.PaymentServiceApplication">

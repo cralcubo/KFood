@@ -13,6 +13,7 @@
         <module>infraestructure/kafka</module>
         <module>customer-service</module>
         <module>payment-service</module>
+        <module>restaurant-service</module>
     </modules>
 
     <properties>
@@ -37,6 +38,19 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Restaurant Service -->
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>restaurant-domain-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>restaurant-application-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Payment Service -->
             <dependency>
                 <groupId>com.croman</groupId>
                 <artifactId>payment-domain-core</artifactId>
@@ -57,7 +71,7 @@
                 <artifactId>payment-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <!-- Common -->
             <dependency>
                 <groupId>com.croman</groupId>
                 <artifactId>common-domain</artifactId>
@@ -68,7 +82,13 @@
                 <artifactId>common-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>common-dataaccess</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
+            <!-- Order Service -->
             <dependency>
                 <groupId>com.croman</groupId>
                 <artifactId>order-domain-core</artifactId>

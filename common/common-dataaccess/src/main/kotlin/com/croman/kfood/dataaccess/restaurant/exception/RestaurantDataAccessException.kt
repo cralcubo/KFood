@@ -1,3 +1,3 @@
-package com.croman.kfood.order.service.dataaccess.restaurant.exception
+package com.croman.kfood.dataaccess.restaurant.exception
 
 class RestaurantDataAccessException(override val message: String) : RuntimeException(message)

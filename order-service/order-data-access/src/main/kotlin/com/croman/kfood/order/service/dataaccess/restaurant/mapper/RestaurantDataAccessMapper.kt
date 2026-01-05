@@ -3,10 +3,10 @@ package com.croman.kfood.order.service.dataaccess.restaurant.mapper
 import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.ProductId
 import com.croman.kfood.domain.valueobject.RestaurantId
-import com.croman.kfood.order.service.dataaccess.restaurant.entity.RestaurantEntity
-import com.croman.kfood.order.service.dataaccess.restaurant.exception.RestaurantDataAccessException
+import com.croman.kfood.dataaccess.restaurant.exception.RestaurantDataAccessException
 import com.croman.kfood.order.service.domain.entity.Product
 import com.croman.kfood.order.service.domain.entity.Restaurant
+import com.croman.kfood.dataaccess.restaurant.entity.RestaurantEntity
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -17,9 +17,10 @@ class RestaurantDataAccessMapper {
         products.map { it.id.value }
 
 
-    fun restaurantEntitiesToRestaurant(entities: List<RestaurantEntity>) : Restaurant {
-        val entity = entities.firstOrNull()
-            ?: throw RestaurantDataAccessException("Rest Entity Not Found")
+    fun restaurantEntitiesToRestaurant(restaurantEntity: RestaurantEntity?) : Restaurant {
+        if(restaurantEntity == null) {
+            throw RestaurantDataAccessException("Restaurant Not Found")
+        }
 
         val products = entities.map {
             Product.instantiate(
