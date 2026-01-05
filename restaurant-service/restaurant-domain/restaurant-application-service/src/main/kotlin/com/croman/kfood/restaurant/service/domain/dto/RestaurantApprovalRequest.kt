@@ -1,7 +1,6 @@
 package com.croman.kfood.restaurant.service.domain.dto
 
 import com.croman.kfood.domain.valueobject.RestaurantOrderStatus
-import com.croman.kfood.restaurant.service.domain.entity.Product
 import java.math.BigDecimal
 import java.time.Instant
 
@@ -11,7 +10,9 @@ data class RestaurantApprovalRequest(
     val restaurantId: String,
     val orderId: String,
     val restaurantOrderStatus: RestaurantOrderStatus,
-    val products: List<Product>, // change to productsId???
+    val orderProducts: List<OrderProduct>,
     val price: BigDecimal,
     val createdAt: Instant
 )
+
+data class OrderProduct(val productId: String, val quantity: Int)

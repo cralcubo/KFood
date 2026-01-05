@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70164f3-3640-4b44-ba43-c6e77ce7b994" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/src/main/kotlin/com/croman/kfood/restaurant/service/dataaccess/adapter/OrderApprovalRepositoryImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/src/main/kotlin/com/croman/kfood/restaurant/service/dataaccess/adapter/RestaurantRepositoryImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/src/main/kotlin/com/croman/kfood/restaurant/service/dataaccess/mapper/OrderApprovalDataAccessMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/src/main/kotlin/com/croman/kfood/restaurant/service/dataaccess/repository/OrderApprovalJpaRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/src/main/kotlin/com/croman/kfood/restaurant/service/dataaccess/mapper/RestaurantDataAccessMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-dataaccess/src/main/kotlin/com/croman/kfood/restaurant/service/dataaccess/mapper/RestaurantDataAccessMapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/entity/OrderApproval.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/entity/OrderApproval.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/listener/kafka/RestaurantApprovalRequestKafkaListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/mapper/RestaurantMessagingDataMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/publisher/kafka/OrderApprovedKafkaMessagePublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/publisher/kafka/OrderRejectedKafkaMessagePublisher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/RestaurantApprovalRequestMessageListenerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/RestaurantApprovalRequestMessageListenerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/dto/RestaurantApprovalRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/dto/RestaurantApprovalRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/ports/input/message/listener/RestaurantApprovalRequestMessageListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/ports/input/message/listener/RestaurantApprovalRequestMessageListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/entity/Restaurant.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/entity/Restaurant.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/valueobject/OrderProduct.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/valueobject/OrderProduct.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +70,7 @@
       <recent name="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/customer" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.croman.kfood.restaurant.service.messaging.publisher.kafka" />
       <recent name="com.croman.kfood.payment.service.messaging.publisher.kafka" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">

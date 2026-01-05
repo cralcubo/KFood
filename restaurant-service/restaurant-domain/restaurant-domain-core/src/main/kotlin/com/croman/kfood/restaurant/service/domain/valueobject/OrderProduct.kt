@@ -1,8 +1,8 @@
 package com.croman.kfood.restaurant.service.domain.valueobject
 
-import com.croman.kfood.restaurant.service.domain.entity.Product
+import com.croman.kfood.domain.valueobject.ProductId
 
 data class OrderProduct(
-    val product: Product,
+    val productId: ProductId,
     val quantity: Int,
 )

@@ -33,17 +33,19 @@ class Restaurant private constructor(
         }
 
         // Check that the order matches the available products and that they are available
-        orderDetail.orderProducts.map { it.product }.forEach { orderProduct ->
-            val restaurantProduct = products.find { restaurantProduct -> restaurantProduct == orderProduct }
+        orderDetail.orderProducts.forEach { orderProduct ->
+            val restaurantProduct = products.find { it.id == orderProduct.productId }
                 ?: throw RestaurantDomainException("The product ${orderDetail.orderId} was not found in restaurant $id.")
-
             if(!restaurantProduct.available) {
                 throw RestaurantDomainException("The product ${orderDetail.orderId} is not available in restaurant $id.")
             }
         }
 
         val total = orderDetail.orderProducts
-            .map { it.product.price.multiply(it.quantity) }
+            .map {
+                val product = products.find { restaurantProduct -> restaurantProduct.id == it.productId }!!
+                product.price.multiply(it.quantity)
+            }
             .reduce(Money::add)
 
         if(total != orderDetail.totalAmount) {

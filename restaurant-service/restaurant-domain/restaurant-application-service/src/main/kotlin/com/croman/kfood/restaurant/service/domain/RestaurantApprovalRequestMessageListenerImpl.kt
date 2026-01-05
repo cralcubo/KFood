@@ -3,6 +3,7 @@ package com.croman.kfood.restaurant.service.domain
 import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.OrderId
 import com.croman.kfood.domain.valueobject.OrderStatus
+import com.croman.kfood.domain.valueobject.ProductId
 import com.croman.kfood.domain.valueobject.RestaurantOrderStatus
 import com.croman.kfood.restaurant.service.domain.dto.RestaurantApprovalRequest
 import com.croman.kfood.restaurant.service.domain.entity.OrderDetail
@@ -61,7 +62,9 @@ class RestaurantApprovalRequestMessageListenerImpl(
                 RestaurantOrderStatus.PAID -> OrderStatus.PAID
             },
             totalAmount = Money(request.price),
-            orderProducts = request.products.map { OrderProduct(it, 1) }
+            orderProducts = request.orderProducts.map {
+                OrderProduct(ProductId(UUID.fromString(it.productId)), it.quantity)
+            }
         )
         val event = restaurantDomainService.validateOrder(restaurant, orderDetail)
         orderApprovalRepository.save(event.orderApproval)

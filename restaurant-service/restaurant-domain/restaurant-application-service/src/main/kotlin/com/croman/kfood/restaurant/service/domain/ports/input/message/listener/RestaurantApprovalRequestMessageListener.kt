@@ -4,6 +4,6 @@ import com.croman.kfood.restaurant.service.domain.dto.RestaurantApprovalRequest
 
 interface RestaurantApprovalRequestMessageListener {
 
-    fun approveOrder(request: com.croman.kfood.restaurant.service.domain.dto.RestaurantApprovalRequest)
+    fun approveOrder(request: RestaurantApprovalRequest)
 
 }
