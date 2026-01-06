@@ -41,6 +41,16 @@
             <!-- Restaurant Service -->
             <dependency>
                 <groupId>com.croman</groupId>
+                <artifactId>restaurant-dataaccess</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>restaurant-messaging</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
                 <artifactId>restaurant-domain-core</artifactId>
                 <version>${project.version}</version>
             </dependency>

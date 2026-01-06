@@ -5,16 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70164f3-3640-4b44-ba43-c6e77ce7b994" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/listener/kafka/RestaurantApprovalRequestKafkaListener.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/mapper/RestaurantMessagingDataMapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/publisher/kafka/OrderApprovedKafkaMessagePublisher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/publisher/kafka/OrderRejectedKafkaMessagePublisher.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/RestaurantApprovalRequestMessageListenerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/RestaurantApprovalRequestMessageListenerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/dto/RestaurantApprovalRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/dto/RestaurantApprovalRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/ports/input/message/listener/RestaurantApprovalRequestMessageListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/ports/input/message/listener/RestaurantApprovalRequestMessageListener.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/entity/Restaurant.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/entity/Restaurant.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/valueobject/OrderProduct.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-domain-core/src/main/kotlin/com/croman/kfood/restaurant/service/domain/valueobject/OrderProduct.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/kotlin/com/croman/kfood/restaurant/service/domain/BeanConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/kotlin/com/croman/kfood/restaurant/service/domain/RestaurantServiceApplication.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/resources/init-data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/src/main/resources/init-schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-container/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-container/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-container/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-container/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,26 +40,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.CustomerServiceApplication.executor": "Run",
-    "Spring Boot.OrderServiceApplication.executor": "Debug",
-    "Spring Boot.PaymentServiceApplication.executor": "Run",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/croman/MyProjects/KFood/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditehistory",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.CustomerServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.OrderServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/croman/MyProjects/KFood/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditehistory&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/payment-service/payment-dataaccess/src/main/kotlin/com/croman/kfood/payment/service/dataaccess/creditehistory" />
