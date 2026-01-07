@@ -4,6 +4,10 @@ import com.croman.kfood.domain.valueobject.PaymentStatus
 import java.math.BigDecimal
 import java.time.Instant
 
+/**
+ * Class that represents the message queued in the topic: `payment-response-topic`.
+ * This message will be sent by the Paymen Service and it will be consumed by the Order Service.
+ */
 data class PaymentResponse(
     val id: String,
     val sagaId: String,
@@ -14,5 +18,4 @@ data class PaymentResponse(
     val createdAt: Instant,
     val paymentStatus: PaymentStatus,
     val failureMessages: List<String>,
-
 )

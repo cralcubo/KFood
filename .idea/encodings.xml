@@ -15,7 +15,9 @@
     <file url="file://$PROJECT_DIR$/infraestructure/kafka/kafka-producer/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infraestructure/kafka/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infraestructure/kafka/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/infraestructure/saga/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infraestructure/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/infraestructure/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-application/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-application/src/main/kotlin" charset="UTF-8" />

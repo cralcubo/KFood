@@ -9,5 +9,6 @@ data class RestaurantApprovalResponse(
     val orderId: String,
     val restaurantId: String,
     val createdAt: Instant,
-    val orderApprovalStatus: OrderApprovalStatus
+    val orderApprovalStatus: OrderApprovalStatus,
+    val failureMessages: List<String>
 )

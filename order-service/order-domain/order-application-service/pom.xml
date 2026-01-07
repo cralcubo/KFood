@@ -11,6 +11,10 @@
     <dependencies>
         <dependency>
             <groupId>com.croman</groupId>
+            <artifactId>saga</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.croman</groupId>
             <artifactId>order-domain-core</artifactId>
         </dependency>
         <dependency>

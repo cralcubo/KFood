@@ -38,6 +38,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- SAGA -->
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>saga</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- Restaurant Service -->
             <dependency>
                 <groupId>com.croman</groupId>

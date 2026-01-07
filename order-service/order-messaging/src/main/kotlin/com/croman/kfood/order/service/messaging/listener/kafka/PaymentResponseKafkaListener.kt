@@ -12,16 +12,25 @@ import org.springframework.messaging.handler.annotation.Header
 import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.stereotype.Component
 
+/**
+ * Kafka consumer of the topic: `payment-response-topic`.
+ * That topic is filled in with messages from the `Payment Service` when a
+ * payment is completed.
+ * This consumer exists in the `Order Service` because depending on the status
+ * of the message: `PaymentResponseAvroModel` the Order Service will be notified
+ * if the Payment was completed (`PaymentStatus.COMPLETED`) or if the Payment Failed
+ * or if it was Canceled through the Message listener: `PaymentResponseMessageListener`
+ */
 @Component
 class PaymentResponseKafkaListener(
     private val messageListener: PaymentResponseMessageListener,
     private val dataMapper: OrderMessagingDataMapper
-): KafkaConsumer<PaymentResponseAvroModel> {
+) : KafkaConsumer<PaymentResponseAvroModel> {
 
     private val logger = KotlinLogging.logger {}
 
     @KafkaListener(
-        id= $$"${kafka-consumer-config.payment-consumer-group-id}",
+        id = $$"${kafka-consumer-config.payment-consumer-group-id}",
         topics = [$$"${order-service.payment-response-topic-name}"]
     )
     override fun receive(
@@ -33,13 +42,14 @@ class PaymentResponseKafkaListener(
         logger.info { "${messages.size} number of payment responses received with keys: $keys, partitions: $partitions, offsets: $offsets" }
         // process all the messages
         messages.forEach {
-            when(it.paymentStatus) {
+            when (it.paymentStatus) {
                 PaymentStatus.COMPLETED -> {
                     logger.info { "Processing successful payment for order ${it.orderId}" }
                     with(dataMapper) {
                         messageListener.paymentCompleted(it.toResponse())
                     }
                 }
+
                 PaymentStatus.CANCELLED,
                 PaymentStatus.FAILED -> {
                     logger.info { "Processing unsuccessful payment for order ${it.orderId}" }

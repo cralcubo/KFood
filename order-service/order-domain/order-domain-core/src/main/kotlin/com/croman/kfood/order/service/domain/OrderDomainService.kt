@@ -1,6 +1,8 @@
 package com.croman.kfood.order.service.domain
 
+import com.croman.kfood.order.service.domain.entity.ApprovedOrder
 import com.croman.kfood.order.service.domain.entity.CancellableOrder
+import com.croman.kfood.order.service.domain.entity.CancelledOrder
 import com.croman.kfood.order.service.domain.entity.OrderItem
 import com.croman.kfood.order.service.domain.entity.PaidOrder
 import com.croman.kfood.order.service.domain.entity.PendingOrder
@@ -20,11 +22,11 @@ interface OrderDomainService {
 
     fun payOrder(order: PendingOrder): OrderEvent.Paid
 
-    fun approveOrder(order: PaidOrder)
+    fun approveOrder(order: PaidOrder): ApprovedOrder
 
     fun cancelOrderPayment(order: PaidOrder, failureMessages: List<String>): OrderEvent.Cancelled
 
-    fun cancelOrder(order: CancellableOrder, failureMessages: List<String>)
+    fun cancelOrder(order: CancellableOrder, failureMessages: List<String>): CancelledOrder
 }
 
 class OrderDomainServiceImpl: OrderDomainService {
@@ -52,9 +54,10 @@ class OrderDomainServiceImpl: OrderDomainService {
         return OrderEvent.Paid(paidOrder, now)
     }
 
-    override fun approveOrder(order: PaidOrder) {
+    override fun approveOrder(order: PaidOrder): ApprovedOrder {
         val approvedOrder = order.approveOrder()
         logger.info { "Order was approved $approvedOrder" }
+        return approvedOrder
     }
 
     override fun cancelOrderPayment(order: PaidOrder, failureMessages: List<String>): OrderEvent.Cancelled {
@@ -66,9 +69,10 @@ class OrderDomainServiceImpl: OrderDomainService {
     override fun cancelOrder(
         order: CancellableOrder,
         failureMessages: List<String>
-    ) {
+    ): CancelledOrder {
         val cancelledOrder = order.cancelOrder(failureMessages)
-        logger.info { "Cancelled order $cancelledOrder" }
+        logger.info { "Cancelled order $cancelledOrder with failure message: $failureMessages" }
+        return cancelledOrder
     }
 
     private fun validateRestaurant(restaurant: Restaurant) {

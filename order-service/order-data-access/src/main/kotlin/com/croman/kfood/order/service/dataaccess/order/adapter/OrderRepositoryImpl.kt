@@ -1,10 +1,12 @@
 package com.croman.kfood.order.service.dataaccess.order.adapter
 
+import com.croman.kfood.domain.valueobject.OrderId
 import com.croman.kfood.order.service.dataaccess.order.mapper.OrderDataAccessMapper
 import com.croman.kfood.order.service.dataaccess.order.repository.OrderJpaRepository
 import com.croman.kfood.order.service.domain.entity.Order
 import com.croman.kfood.order.service.domain.ports.output.repository.OrderRepository
 import com.croman.kfood.order.service.domain.valueobject.TrackingId
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
@@ -23,6 +25,11 @@ class OrderRepositoryImpl(
         with(mapper) {
             jpaRepository.findByTrackingId(trackingId.value)
                 ?.toOrder()
+        }
+
+    override fun findByOrderId(orderId: OrderId): Order? =
+        with(mapper) {
+            jpaRepository.findByIdOrNull(orderId.value)?.toOrder()
         }
 
 }

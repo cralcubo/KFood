@@ -33,7 +33,8 @@ class OrderMessagingDataMapper {
             orderApprovalStatus = when(orderApprovalStatus) {
                 OrderApprovalStatus.APPROVED -> APPROVED
                 OrderApprovalStatus.REJECTED -> REJECTED
-            }
+            },
+            failureMessages = failureMessages
         )
 
     fun PaymentResponseAvroModel.toResponse()=
