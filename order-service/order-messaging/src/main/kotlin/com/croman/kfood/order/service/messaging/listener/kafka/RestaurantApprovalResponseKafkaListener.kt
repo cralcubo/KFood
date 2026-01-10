@@ -10,7 +10,9 @@ import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.KafkaHeaders
 import org.springframework.messaging.handler.annotation.Header
 import org.springframework.messaging.handler.annotation.Payload
+import org.springframework.stereotype.Component
 
+@Component
 class RestaurantApprovalResponseKafkaListener(
     private val dataMapper: OrderMessagingDataMapper,
     private val messageListener: RestaurantApprovalResponseMessageListener
@@ -19,7 +21,7 @@ class RestaurantApprovalResponseKafkaListener(
 
     @KafkaListener(
         id= $$"${kafka-consumer-config.restaurant-approval-consumer-group-id}",
-        topics = [$$"${order-service.restaurant-approval-response- topic-name}"]
+        topics = [$$"${order-service.restaurant-approval-response-topic-name}"]
     )
     override fun receive(
         @Payload messages: List<RestaurantApprovalResponseAvroModel>,
@@ -31,13 +33,13 @@ class RestaurantApprovalResponseKafkaListener(
         messages.forEach {
             when(it.orderApprovalStatus) {
                 OrderApprovalStatus.APPROVED -> {
-                    logger.info { "Processing order approved for ${it.orderId}" }
+                    logger.info { "Processing order APPROVED for ${it.orderId}" }
                     with(dataMapper) {
                         messageListener.orderApproved(it.toResponse())
                     }
                 }
                 OrderApprovalStatus.REJECTED -> {
-                    logger.info { "Processing order rejected  for ${it.orderId} with failure message: ${it.failureMessages}" }
+                    logger.info { "Processing order REJECTED  for ${it.orderId} with failure message: ${it.failureMessages}" }
                     with(dataMapper) {
                         messageListener.orderRejected(it.toResponse())
                     }

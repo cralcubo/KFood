@@ -9,12 +9,12 @@ import jakarta.persistence.Table
 import java.util.UUID
 
 @Entity
-@Table(name = "order-approval", schema = "restaurant")
+@Table(name = "order_approval", schema = "restaurant")
 data class OrderApprovalEntity(
     @Id
     val id: UUID,
     val restaurantId: UUID,
     val orderId: UUID,
     @Enumerated(EnumType.STRING)
-    val orderApprovalStatus: OrderApprovalStatus,
+    val status: OrderApprovalStatus,
 )

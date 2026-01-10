@@ -11,7 +11,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component
 
 @Component
-class CreateOrderKafkaMessagePublisher(
+class OrderCreatedPaymentRequestKafkaMessagePublisher(
     val mapper: OrderMessagingDataMapper,
     val configData: OrderServiceConfigData,
     val kafkaProducer: KafkaProducer<String, PaymentRequestAvroModel>, // PaymentRequestAvroModel => payment-request-topic

@@ -18,9 +18,11 @@ sealed class Payment(
     val createdAt: ZonedDateTime,
 ) : AggregateRoot<PaymentId>(id) {
 
-    class Completed(pending: Pending) : Payment(pending.id, pending.orderId, pending.customerId, pending.price, pending.createdAt)
+    class Completed(pending: Pending) : Payment(pending.id, pending.orderId, pending.customerId, pending.price, pending.createdAt) {
+        fun cancel() = Cancelled(this)
+    }
 
-    class Cancelled(pending: Pending) : Payment(pending.id, pending.orderId, pending.customerId, pending.price, pending.createdAt)
+    class Cancelled(completed: Completed) : Payment(completed.id, completed.orderId, completed.customerId, completed.price, completed.createdAt)
 
     class Failed(pending: Pending) : Payment(pending.id, pending.orderId, pending.customerId, pending.price, pending.createdAt)
 
@@ -60,7 +62,6 @@ sealed class Payment(
         }
 
         fun complete() = Completed(this)
-        fun cancel() = Cancelled(this)
         fun failed() = Failed(this)
 
     }

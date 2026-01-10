@@ -1,5 +1,7 @@
 package com.croman.kfood.order.service.domain
 
+import com.croman.kfood.domain.valueobject.CustomerId
+import com.croman.kfood.domain.valueobject.RestaurantId
 import com.croman.kfood.order.service.domain.dto.create.CreateOrderCommand
 import com.croman.kfood.order.service.domain.entity.OrderItem
 import com.croman.kfood.order.service.domain.event.OrderEvent
@@ -28,12 +30,12 @@ class OrderCreateHelper(
     private val logger = KotlinLogging.logger {}
 
     @Transactional
-    fun persistOrder(command: CreateOrderCommand): OrderEvent.Created {
+    fun createAndPersistPendingOrder(command: CreateOrderCommand): OrderEvent.Created {
         // validate the existence of the customer
-        customerRepository.findCustomer(command.customerId)
+        customerRepository.findCustomer(CustomerId(command.customerId))
             ?: throw OrderDomainException("The customer ${command.customerId} was not found.")
         // retrieve the restaurant
-        val restaurant = restaurantRepository.findRestaurant(command.restaurantId)
+        val restaurant = restaurantRepository.findRestaurant(RestaurantId(command.restaurantId))
             ?: throw OrderDomainException("The restaurant ${command.restaurantId} was not found.")
 
 
@@ -45,7 +47,7 @@ class OrderCreateHelper(
                 }
             }
 
-        val order = orderDataMapper.createOrder(command).addItems(orderItems)
+        val order = orderDataMapper.createPendingOrder(command).addItems(orderItems)
         orderRepository.save(order)
         logger.info { "Order ${order.id} created and persisted" }
 

@@ -12,12 +12,6 @@ class Product private constructor(
 ) : BaseEntity<ProductId>(id) {
 
     companion object {
-        fun create(name: String, price: Money) =
-            instantiate(
-                id = ProductId(UUID.randomUUID()),
-                name = name,
-                price = price
-            )
 
         fun instantiate(id: ProductId, name: String, price: Money) =
             Product(

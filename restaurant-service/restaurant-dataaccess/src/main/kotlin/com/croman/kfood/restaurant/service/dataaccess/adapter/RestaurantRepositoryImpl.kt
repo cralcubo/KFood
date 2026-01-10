@@ -1,6 +1,7 @@
 package com.croman.kfood.restaurant.service.dataaccess.adapter
 
 import com.croman.kfood.dataaccess.repository.RestaurantJpaRepository
+import com.croman.kfood.domain.valueobject.RestaurantId
 import com.croman.kfood.restaurant.service.dataaccess.mapper.RestaurantDataAccessMapper
 import com.croman.kfood.restaurant.service.domain.entity.Restaurant
 import com.croman.kfood.restaurant.service.domain.ports.output.repository.RestaurantRepository
@@ -14,7 +15,7 @@ class RestaurantRepositoryImpl(
     private val mapper: RestaurantDataAccessMapper
 ) : RestaurantRepository {
 
-    override fun findById(restaurantId: UUID) = with(mapper) {
-        repository.findByIdOrNull(restaurantId)?.toRestaurant()
+    override fun findById(restaurantId: RestaurantId) = with(mapper) {
+        repository.findByIdOrNull(restaurantId.value)?.toRestaurant()
     }
 }

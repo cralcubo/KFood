@@ -6,7 +6,7 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.util.UUID
 
-@Table(name = "credit_entry")
+@Table(name = "credit_entry", schema = "payment")
 @Entity
 data class CreditEntryEntity(
     @Id

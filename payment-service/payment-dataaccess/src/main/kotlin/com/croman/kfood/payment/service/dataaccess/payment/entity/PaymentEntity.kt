@@ -10,7 +10,7 @@ import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.UUID
 
-@Table(name = "payments")
+@Table(name = "payments", schema = "payment")
 @Entity
 data class PaymentEntity(
     @Id

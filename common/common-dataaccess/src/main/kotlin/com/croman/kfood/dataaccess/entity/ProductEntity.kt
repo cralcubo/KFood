@@ -16,6 +16,6 @@ data class ProductEntity(
     val name: String,
     val price: BigDecimal,
     val available: Boolean,
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "restaurants")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "products")
     val restaurants: List<RestaurantEntity>,
 )

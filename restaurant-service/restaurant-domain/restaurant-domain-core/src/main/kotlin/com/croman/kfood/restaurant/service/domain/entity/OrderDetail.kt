@@ -1,7 +1,6 @@
 package com.croman.kfood.restaurant.service.domain.entity
 
 import com.croman.kfood.domain.entity.BaseEntity
-import com.croman.kfood.restaurant.service.domain.entity.Product
 import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.OrderId
 import com.croman.kfood.domain.valueobject.OrderStatus
@@ -15,8 +14,8 @@ class OrderDetail(
 ) : BaseEntity<OrderId>(orderId) {
 
     companion object {
-        fun instantiate(id: OrderId, orderStatus: OrderStatus, totalAmount: Money, orderProducts: List<OrderProduct>) =
-            OrderDetail(id, orderStatus, totalAmount,  orderProducts)
+        fun instantiate(orderId: OrderId, orderStatus: OrderStatus, totalAmount: Money, orderProducts: List<OrderProduct>) =
+            OrderDetail(orderId, orderStatus, totalAmount,  orderProducts)
 
 //        fun create(orderStatus: OrderStatus, totalAmount: Money, products: List<Product>) =
 //            instantiate(OrderId(UUID.randomUUID()), orderStatus, totalAmount, products)

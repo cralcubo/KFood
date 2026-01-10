@@ -4,6 +4,7 @@ import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.OrderId
 import com.croman.kfood.domain.valueobject.OrderStatus
 import com.croman.kfood.domain.valueobject.ProductId
+import com.croman.kfood.domain.valueobject.RestaurantId
 import com.croman.kfood.domain.valueobject.RestaurantOrderStatus
 import com.croman.kfood.restaurant.service.domain.dto.RestaurantApprovalRequest
 import com.croman.kfood.restaurant.service.domain.entity.OrderDetail
@@ -35,11 +36,11 @@ class RestaurantApprovalRequestMessageListenerImpl(
     override fun approveOrder(request: RestaurantApprovalRequest) {
         when(val event = approveAndPersistOrder(request)){
             is OrderApprovalEvent.Approved -> {
-                logger.info { "Order ${request.orderId} is approved!" }
+                logger.info { "Order ${request.orderId} is approved. Publishing Order-Approved Event." }
                 orderApprovedMessagePublisher.publish(event)
             }
             is OrderApprovalEvent.Rejected -> {
-                logger.info { "Order ${request.orderId} was rejected!" }
+                logger.info { "Order ${request.orderId} was rejected. Publishing Order-Rejected Event." }
                 orderRejectedMessagePublisher.publish(event)
             }
         }
@@ -48,7 +49,7 @@ class RestaurantApprovalRequestMessageListenerImpl(
     @Transactional
     private fun approveAndPersistOrder(request: RestaurantApprovalRequest): OrderApprovalEvent {
         logger.info { "Received approve order request for order ${request.orderId}" }
-        val restaurant = restaurantRepository.findById(request.restaurantId.toUUID())
+        val restaurant = restaurantRepository.findById(RestaurantId(request.restaurantId.toUUID()))
             ?: throw RestaurantNotFoundException(
                 "Restaurant ${request.restaurantId} not found"
             )
@@ -57,13 +58,13 @@ class RestaurantApprovalRequestMessageListenerImpl(
         }
 
         val orderDetail = OrderDetail.instantiate(
-            id = OrderId(request.orderId.toUUID()),
+            orderId = OrderId(request.orderId.toUUID()),
             orderStatus = when(request.restaurantOrderStatus) {
                 RestaurantOrderStatus.PAID -> OrderStatus.PAID
             },
             totalAmount = Money(request.price),
             orderProducts = request.orderProducts.map {
-                OrderProduct(ProductId(UUID.fromString(it.productId)), it.quantity)
+                OrderProduct(ProductId(it.productId.toUUID()), it.quantity)
             }
         )
         val event = restaurantDomainService.validateOrder(restaurant, orderDetail)

@@ -44,7 +44,7 @@ class PaymentResponseKafkaListener(
         messages.forEach {
             when (it.paymentStatus) {
                 PaymentStatus.COMPLETED -> {
-                    logger.info { "Processing successful payment for order ${it.orderId}" }
+                    logger.info { "Processing COMPLETED payment for order ${it.orderId}" }
                     with(dataMapper) {
                         messageListener.paymentCompleted(it.toResponse())
                     }
@@ -52,7 +52,7 @@ class PaymentResponseKafkaListener(
 
                 PaymentStatus.CANCELLED,
                 PaymentStatus.FAILED -> {
-                    logger.info { "Processing unsuccessful payment for order ${it.orderId}" }
+                    logger.info { "Processing unsuccessful (${it.paymentStatus}) payment for order ${it.orderId}" }
                     with(dataMapper) {
                         messageListener.paymentCancelled(it.toResponse())
                     }

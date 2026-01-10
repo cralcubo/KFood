@@ -2,6 +2,7 @@ package com.croman.kfood.order.service.dataaccess.order.mapper
 
 import com.croman.kfood.domain.valueobject.CustomerId
 import com.croman.kfood.domain.valueobject.Money
+import com.croman.kfood.domain.valueobject.Money.Companion.ZERO
 import com.croman.kfood.domain.valueobject.OrderId
 import com.croman.kfood.domain.valueobject.OrderStatus
 import com.croman.kfood.domain.valueobject.ProductId
@@ -39,16 +40,19 @@ class OrderDataAccessMapper {
             items = orderItems.map { it.toEntity(this) }
         }
 
-    fun OrderEntity.toOrder() = when(orderStatus) {
-        OrderStatus.PENDING -> toPendingOrder()
-        OrderStatus.PAID -> PaidOrder(toPendingOrder())
-        OrderStatus.APPROVED -> ApprovedOrder(PaidOrder(toPendingOrder()))
-        OrderStatus.CANCELLED -> CancelledOrder(toPendingOrder(), failureMessages.split(","))
-        OrderStatus.CANCELLING -> CancellingOrder(PaidOrder(toPendingOrder()), failureMessages.split(","))
+    fun OrderEntity.toOrder(): Order {
+        val pendingOrder = toPendingOrder()
+
+        return when (orderStatus) {
+            OrderStatus.PENDING -> pendingOrder
+            OrderStatus.PAID -> PaidOrder(pendingOrder)
+            OrderStatus.APPROVED -> ApprovedOrder(PaidOrder(pendingOrder))
+            OrderStatus.CANCELLED -> CancelledOrder(pendingOrder, failureMessages.split(","))
+            OrderStatus.CANCELLING -> CancellingOrder(PaidOrder(pendingOrder), failureMessages.split(","))
+        }
     }
 
     private fun OrderEntity.toPendingOrder(): PendingOrder {
-        require(orderStatus == OrderStatus.PENDING)
         return PendingOrder.instantiate(
             id = OrderId(id),
             restaurantId = RestaurantId(restaurantId),
@@ -62,7 +66,7 @@ class OrderDataAccessMapper {
     fun OrderItemEntity.toOrderItem() =
         OrderItem.instantiate(
             id = OrderItemId(id),
-            product = Product.instantiate(ProductId(id), "test", Money.Companion.ZERO),
+            product = Product.instantiate(ProductId(productId), "test", ZERO),
             quantity = quantity
         )
 

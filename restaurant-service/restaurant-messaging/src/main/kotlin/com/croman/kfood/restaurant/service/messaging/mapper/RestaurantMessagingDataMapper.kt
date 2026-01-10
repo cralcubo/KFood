@@ -1,21 +1,19 @@
 package com.croman.kfood.restaurant.service.messaging.mapper
 
-import com.croman.kfood.domain.valueobject.Money
-import com.croman.kfood.domain.valueobject.ProductId
 import com.croman.kfood.kafka.order.avro.model.OrderApprovalStatus
 import com.croman.kfood.kafka.order.avro.model.RestaurantApprovalRequestAvroModel
 import com.croman.kfood.kafka.order.avro.model.RestaurantApprovalResponseAvroModel
 import com.croman.kfood.kafka.order.avro.model.RestaurantOrderStatus
 import com.croman.kfood.restaurant.service.domain.dto.OrderProduct
 import com.croman.kfood.restaurant.service.domain.dto.RestaurantApprovalRequest
-import com.croman.kfood.restaurant.service.domain.entity.Product
 import com.croman.kfood.restaurant.service.domain.event.OrderApprovalEvent
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class RestaurantMessagingDataMapper {
-    fun OrderApprovalEvent.toAvroModel() =
+
+    fun OrderApprovalEvent.toAvroModel(): RestaurantApprovalResponseAvroModel =
         RestaurantApprovalResponseAvroModel.newBuilder()
             .setId(UUID.randomUUID().toString())
             .setSagaId("")
@@ -26,6 +24,7 @@ class RestaurantMessagingDataMapper {
                 is OrderApprovalEvent.Approved -> OrderApprovalStatus.APPROVED
                 is OrderApprovalEvent.Rejected -> OrderApprovalStatus.REJECTED
             })
+            .setFailureMessages(emptyList())
             .build()
 
     fun RestaurantApprovalRequestAvroModel.toRequest() =
@@ -41,11 +40,4 @@ class RestaurantMessagingDataMapper {
             price = price,
             createdAt = createdAt
         )
-
-
-
-    private fun String.toUUID() = UUID.fromString(this)
-
-
-
 }

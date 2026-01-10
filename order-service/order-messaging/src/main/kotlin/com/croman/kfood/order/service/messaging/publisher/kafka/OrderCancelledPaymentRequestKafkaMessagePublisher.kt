@@ -11,7 +11,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component
 
 @Component
-class CancelOrderKafkaMessagePublisher(
+class OrderCancelledPaymentRequestKafkaMessagePublisher(
     val mapper: OrderMessagingDataMapper,
     val configData: OrderServiceConfigData,
     val kafkaProducer: KafkaProducer<String, PaymentRequestAvroModel>, // publishes to topic: `pyment-request-topic`

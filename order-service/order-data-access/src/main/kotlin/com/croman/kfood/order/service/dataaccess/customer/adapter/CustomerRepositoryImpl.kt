@@ -1,5 +1,6 @@
 package com.croman.kfood.order.service.dataaccess.customer.adapter
 
+import com.croman.kfood.domain.valueobject.CustomerId
 import com.croman.kfood.order.service.dataaccess.customer.mapper.CustomerDataAccessMapper
 import com.croman.kfood.order.service.dataaccess.customer.repository.CustomerJpaRepository
 import com.croman.kfood.order.service.domain.entity.Customer
@@ -14,7 +15,7 @@ class CustomerRepositoryImpl(
     private val mapper: CustomerDataAccessMapper
 ) : CustomerRepository {
 
-    override fun findCustomer(id: UUID): Customer? = with(mapper) {
-        jpaRepository.findByIdOrNull(id)?.toCustomer()
+    override fun findCustomer(id: CustomerId): Customer? = with(mapper) {
+        jpaRepository.findByIdOrNull(id.value)?.toCustomer()
     }
 }

@@ -9,9 +9,9 @@ import com.croman.kfood.payment.service.domain.port.input.message.listener.Payme
 import com.croman.kfood.payment.service.domain.port.output.repository.CreditEntryRepository
 import com.croman.kfood.payment.service.domain.port.output.repository.CreditHistoryRepository
 import com.croman.kfood.payment.service.domain.port.output.repository.PaymentRepository
-import com.croman.kfood.payment.service.domain.port.output.repository.message.publisher.PaymentCancelledMessagePublisher
-import com.croman.kfood.payment.service.domain.port.output.repository.message.publisher.PaymentCompletedMessagePublisher
-import com.croman.kfood.payment.service.domain.port.output.repository.message.publisher.PaymentFailedMessagePublisher
+import com.croman.kfood.payment.service.domain.port.output.message.publisher.PaymentCancelledMessagePublisher
+import com.croman.kfood.payment.service.domain.port.output.message.publisher.PaymentCompletedMessagePublisher
+import com.croman.kfood.payment.service.domain.port.output.message.publisher.PaymentFailedMessagePublisher
 import com.croman.kfood.payment.service.domain.entity.Payment
 import com.croman.kfood.payment.service.domain.event.PaymentEvent
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -43,7 +43,7 @@ class PaymentRequestMessageListenerImpl(
     }
 
     private fun publishEvent(event: PaymentEvent) {
-        logger.info { "Publishing event $event" }
+        logger.info { "Publishing event ${event.javaClass.simpleName} for order ${event.currentPayment.orderId}" }
         when (event) {
             is PaymentEvent.Cancelled -> paymentCancelledMessagePublisher.publish(event)
             is PaymentEvent.Completed -> paymentCompletedMessagePublisher.publish(event)
@@ -56,7 +56,7 @@ class PaymentRequestMessageListenerImpl(
     fun cancelAndPersistPayment(paymentRequest: PaymentRequest) : PaymentEvent {
         logger.info { "Cancelling payment request for orderId ${paymentRequest.orderId}" }
         val orderId = OrderId(paymentRequest.orderId.toUUID())
-        val payment = paymentRepository.findByOrderId(orderId) as? Payment.Pending
+        val payment = paymentRepository.findByOrderId(orderId) as? Payment.Completed
             ?: throw PaymentApplicationServiceException("Payment request for orderId $orderId not found")
 
         val customerId = CustomerId(paymentRequest.customerId.toUUID())
@@ -80,6 +80,7 @@ class PaymentRequestMessageListenerImpl(
     private fun completeAndPersistPayment(paymentRequest: PaymentRequest): PaymentEvent {
         logger.info { "Completing payment request for orderId ${paymentRequest.orderId}" }
         val customerId = CustomerId(paymentRequest.customerId.toUUID())
+        // Create a pending payment to be completed in later steps in this function!
         val payment = Payment.Pending.create(
             orderId = OrderId(paymentRequest.orderId.toUUID()),
             customerId = customerId,

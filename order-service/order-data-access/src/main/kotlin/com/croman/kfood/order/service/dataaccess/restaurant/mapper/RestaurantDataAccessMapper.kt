@@ -26,9 +26,9 @@ class RestaurantDataAccessMapper {
         }
 
         return Restaurant.instantiate(
-            RestaurantId(restaurantEntity.restaurantId),
+            RestaurantId(restaurantEntity.id),
             products,
-            restaurantEntity.restaurantActive
+            restaurantEntity.active
         )
 
     }

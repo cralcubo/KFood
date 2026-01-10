@@ -6,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 DROP TYPE IF EXISTS payment_status;
 
-CREATE TYPE payment_status AS ENUM ('COMPLETED', 'CANCELLED', 'FAILED');
+CREATE TYPE payment_status AS ENUM ('COMPLETED', 'CANCELLED', 'FAILED', 'PENDING');
 
 DROP TABLE IF EXISTS "payment".payments CASCADE;
 
@@ -17,7 +17,7 @@ CREATE TABLE "payment".payments
     order_id uuid NOT NULL,
     price numeric(10,2) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
-    status payment_status NOT NULL,
+    payment_status payment_status NOT NULL,
     CONSTRAINT payments_pkey PRIMARY KEY (id)
 );
 

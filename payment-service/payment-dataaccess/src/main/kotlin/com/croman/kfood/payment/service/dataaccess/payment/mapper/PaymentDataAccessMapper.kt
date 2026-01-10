@@ -31,9 +31,9 @@ class PaymentDataAccessMapper {
             createdAt = createdAt
         )
         return when (paymentStatus) {
-            PaymentStatus.COMPLETED -> pending.complete()
-            PaymentStatus.CANCELLED -> pending.cancel()
-            PaymentStatus.FAILED -> pending.failed()
+            PaymentStatus.COMPLETED -> Payment.Completed(pending)
+            PaymentStatus.CANCELLED -> Payment.Cancelled(Payment.Completed(pending))
+            PaymentStatus.FAILED -> Payment.Failed(pending)
             PaymentStatus.PENDING -> pending
         }
     }

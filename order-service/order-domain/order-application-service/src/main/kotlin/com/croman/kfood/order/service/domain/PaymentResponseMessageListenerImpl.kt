@@ -17,7 +17,7 @@ class PaymentResponseMessageListenerImpl(
 
     override fun paymentCompleted(response: PaymentResponse) {
         val orderPaidEvent = orderPaymentSaga.processData(response)
-        logger.info { "Publishing order paid event: $orderPaidEvent" }
+        logger.info { "Publishing order paid event: $orderPaidEvent for order ${orderPaidEvent.order.id}" }
         orderPaidRestaurantRequestMessagePublisher.publish(orderPaidEvent)
     }
 

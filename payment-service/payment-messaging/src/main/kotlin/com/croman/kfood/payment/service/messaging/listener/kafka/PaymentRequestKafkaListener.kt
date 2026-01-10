@@ -33,11 +33,11 @@ class PaymentRequestKafkaListener(
         messages.forEach {
             when(it.paymentOrderStatus) {
                 PaymentOrderStatus.PENDING -> {
-                    logger.info { "Processing pending payment request for order ${it.orderId}" }
+                    logger.info { "Processing PENDING payment request for order ${it.orderId}" }
                     with(dataMapper) { messageListener.completePayment(it.toPaymentRequest()) }
                 }
                 PaymentOrderStatus.CANCELLED -> {
-                    logger.info { "Processing cancelled payment request for order ${it.orderId}" }
+                    logger.info { "Processing CANCELLED payment request for order ${it.orderId}" }
                     with(dataMapper) { messageListener.cancelPayment(it.toPaymentRequest()) }
                 }
             }

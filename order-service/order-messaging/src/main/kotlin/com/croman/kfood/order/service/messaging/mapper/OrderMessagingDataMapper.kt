@@ -93,6 +93,4 @@ class OrderMessagingDataMapper {
             .setId(id.value.toString())
             .setQuantity(quantity)
             .build()
-
-
 }

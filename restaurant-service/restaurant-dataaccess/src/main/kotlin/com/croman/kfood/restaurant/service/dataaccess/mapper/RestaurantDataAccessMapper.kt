@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component
 class RestaurantDataAccessMapper {
 
     fun RestaurantEntity.toRestaurant() = Restaurant.instantiate(
-        id = RestaurantId(restaurantId),
-        active = restaurantActive,
+        id = RestaurantId(id),
+        active = active,
         products = products.map { it.toProduct() }
     )
 

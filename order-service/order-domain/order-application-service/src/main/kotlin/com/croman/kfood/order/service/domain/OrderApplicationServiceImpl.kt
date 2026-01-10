@@ -41,7 +41,8 @@ private class OderCreateHandler(
 
     fun createOrder(command: CreateOrderCommand): CreateOrderResponse {
         logger.info{"Creating order for customer ${command.customerId}"}
-        val event = orderCreateHelper.persistOrder(command)
+        val event = orderCreateHelper.createAndPersistPendingOrder(command)
+        logger.info { "Publishing pending order ${event.order.id} for customer ${command.customerId}" }
         orderCreatedEventMessagePublisher.publish(event)
         return orderDataMapper.toCreateOrderResponse(event.order as PendingOrder)
     }

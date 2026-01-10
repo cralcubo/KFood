@@ -3,6 +3,8 @@ package com.croman.kfood.order.service.domain
 import com.croman.kfood.domain.event.EmptyEvent
 import com.croman.kfood.domain.valueobject.OrderId
 import com.croman.kfood.order.service.domain.dto.message.PaymentResponse
+import com.croman.kfood.order.service.domain.entity.CancellableOrder
+import com.croman.kfood.order.service.domain.entity.PaidOrder
 import com.croman.kfood.order.service.domain.entity.PendingOrder
 import com.croman.kfood.order.service.domain.event.OrderEvent
 import com.croman.kfood.order.service.domain.exception.OrderNotFoundException
@@ -35,12 +37,13 @@ class OrderPaymentSaga(
     @Transactional
     override fun rollback(data: PaymentResponse): EmptyEvent {
         logger.info { "Cancelling payment for order ${data.orderId}" }
-        val order = orderRepository.findByOrderId(OrderId(data.orderId.toUUID())) as? PendingOrder
+        val order = orderRepository.findByOrderId(OrderId(data.orderId.toUUID())) as? CancellableOrder
             ?: throw OrderNotFoundException("Order ${data.orderId} not found")
         val cancelled = orderDomainService.cancelOrder(order, data.failureMessages)
         orderRepository.save(cancelled)
         logger.info { "Order ${order.id} was cancelled" }
-        return EmptyEvent()
+        return EmptyEvent() // Order was cancelled and money was reverted in the PaymentService.
+                            // There is nothing else to do here, therefore we instantiate an EmptyEvent.
     }
 
     private fun String.toUUID() = UUID.fromString(this)

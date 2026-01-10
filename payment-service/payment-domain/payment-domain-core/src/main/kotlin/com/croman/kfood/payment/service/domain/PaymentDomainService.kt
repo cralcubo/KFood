@@ -14,9 +14,17 @@ import java.time.ZonedDateTime
 
 interface PaymentDomainService {
 
-    fun completePayment(payment: Payment.Pending, creditEntry: CreditEntry, creditHistories: List<CreditHistory>) : PaymentEvent
+    fun completePayment(
+        payment: Payment.Pending,
+        creditEntry: CreditEntry,
+        creditHistories: List<CreditHistory>
+    ): PaymentEvent
 
-    fun cancelPayment(payment: Payment.Pending, creditEntry: CreditEntry, creditHistories: List<CreditHistory>): PaymentEvent
+    fun cancelPayment(
+        payment: Payment.Completed,
+        creditEntry: CreditEntry,
+        creditHistories: List<CreditHistory>
+    ): PaymentEvent
 }
 
 class PaymentDomainServiceImpl : PaymentDomainService {
@@ -38,31 +46,28 @@ class PaymentDomainServiceImpl : PaymentDomainService {
             PaymentEvent.Completed(payment.complete(), updatedCredit, updatedHistories, now)
         } catch (e: Exception) {
             PaymentEvent.Failed(
-                payment.failed(), creditEntry, creditHistories,now, e.message ?: "Unknown error (${e.javaClass.simpleName})")
+                payment.failed(),
+                creditEntry,
+                creditHistories,
+                now,
+                e.message ?: "Unknown error (${e.javaClass.simpleName})"
+            )
         }
     }
 
 
     override fun cancelPayment(
-        payment: Payment.Pending,
+        payment: Payment.Completed,
         creditEntry: CreditEntry,
         creditHistories: List<CreditHistory>
     ): PaymentEvent {
+        logger.info { "Cancelling payment for order ${payment.orderId}" }
         val now = ZonedDateTime.now(ZoneId.of("UTC"))
-        try {
-            payment.validatePayment()
-        } catch (e: PaymentDomainException) {
-            return PaymentEvent.Failed(
-                payment.failed(),
-                creditEntry,
-                creditHistories,
-                now, e.message
-            )
-        }
 
         val updatedCredit = creditEntry.addCredit(payment.price)
         val updatedHistories = updateCreditHistory(payment, creditHistories, TransactionType.CREDIT)
-        return PaymentEvent.Completed(payment.complete(), updatedCredit, updatedHistories, now)
+
+        return PaymentEvent.Cancelled(payment.cancel(), updatedCredit, updatedHistories, now)
     }
 
     private fun validateCreditHistories(creditEntry: CreditEntry, creditHistories: List<CreditHistory>) {
@@ -76,11 +81,11 @@ class PaymentDomainServiceImpl : PaymentDomainService {
 
         // validations
         val customerId = creditEntry.customerId
-        if(totalDebitAmount.isGreaterThan(totalCreditAmount)) {
+        if (totalDebitAmount.isGreaterThan(totalCreditAmount)) {
             logger.error { "Customer $customerId does not have enough credit according to its credit history." }
             throw CreditException.Insufficient("Customer $customerId does not have enough credit according to its credit history.")
         }
-        if(creditEntry.totalCreditAmount != totalCreditAmount.subtract(totalDebitAmount)) {
+        if (creditEntry.totalCreditAmount != totalCreditAmount.subtract(totalDebitAmount)) {
             logger.error { "Credit history does not match current credit for customer $customerId." }
             throw CreditException.Invalid("Credit history does not match current credit for customer $customerId.")
         }
@@ -89,13 +94,17 @@ class PaymentDomainServiceImpl : PaymentDomainService {
 
 
     private fun validateCreditEntry(payment: Payment.Pending, creditEntry: CreditEntry) {
-        if(payment.price.isGreaterThan(creditEntry.totalCreditAmount)) {
+        if (payment.price.isGreaterThan(creditEntry.totalCreditAmount)) {
             logger.error { "Customer ${payment.customerId.value} does not have enough credit." }
             throw CreditException.Insufficient("Customer ${payment.customerId.value} does not have enough credit.")
         }
     }
 
-    private fun updateCreditHistory(payment: Payment.Pending, histories: List<CreditHistory>, type: TransactionType): List<CreditHistory> {
+    private fun updateCreditHistory(
+        payment: Payment,
+        histories: List<CreditHistory>,
+        type: TransactionType
+    ): List<CreditHistory> {
         val newCredit = CreditHistory.create(payment.customerId, payment.price, type)
         return histories + newCredit
     }

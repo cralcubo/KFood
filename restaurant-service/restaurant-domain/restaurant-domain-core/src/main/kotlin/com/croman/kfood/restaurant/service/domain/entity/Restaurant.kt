@@ -32,12 +32,12 @@ class Restaurant private constructor(
             throw RestaurantDomainException("The order ${orderDetail.orderId.value} is not paid.")
         }
 
-        // Check that the order matches the available products and that they are available
+        // Check that the order matches the available products and that are available
         orderDetail.orderProducts.forEach { orderProduct ->
             val restaurantProduct = products.find { it.id == orderProduct.productId }
-                ?: throw RestaurantDomainException("The product ${orderDetail.orderId} was not found in restaurant $id.")
+                ?: throw RestaurantDomainException("The product ${orderProduct.productId} was not found in restaurant $id.")
             if(!restaurantProduct.available) {
-                throw RestaurantDomainException("The product ${orderDetail.orderId} is not available in restaurant $id.")
+                throw RestaurantDomainException("The product ${orderProduct.productId} is not available in restaurant $id.")
             }
         }
 

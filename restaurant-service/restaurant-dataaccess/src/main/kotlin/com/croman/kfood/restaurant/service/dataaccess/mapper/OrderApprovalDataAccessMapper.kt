@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 class OrderApprovalDataAccessMapper {
 
     fun OrderApprovalEntity.toOrderApproval(): OrderApproval =
-        when(orderApprovalStatus) {
+        when(status) {
             OrderApprovalStatus.APPROVED -> OrderApproval.Approved.instantiate(
                 id = OrderApprovalId(id),
                 restaurantId = RestaurantId(restaurantId),
@@ -30,7 +30,7 @@ class OrderApprovalDataAccessMapper {
         id = id.value,
         restaurantId = restaurantId.value,
         orderId = orderId.value,
-        orderApprovalStatus = when(this) {
+        status = when(this) {
             is OrderApproval.Approved -> OrderApprovalStatus.APPROVED
             is OrderApproval.Rejected -> OrderApprovalStatus.REJECTED
         }

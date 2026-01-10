@@ -23,7 +23,7 @@ class OrderDataMapper {
      * This method is the one that creates a new pending order, with all the basic information
      * to create one.
      */
-    fun createOrder(command: CreateOrderCommand) = with(command) {
+    fun createPendingOrder(command: CreateOrderCommand) = with(command) {
         PendingOrder.create(
             customerId = CustomerId(customerId),
             restaurantId = RestaurantId(restaurantId),
@@ -47,7 +47,7 @@ class OrderDataMapper {
         CreateOrderResponse(
             orderTrackingId = trackingId.value,
             orderStatus = OrderStatus.PENDING,
-            message = "Order created successfully",
+            message = "Order ${order.id} created successfully",
         )
     }
 

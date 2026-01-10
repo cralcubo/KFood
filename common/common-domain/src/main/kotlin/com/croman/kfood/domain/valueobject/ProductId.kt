@@ -2,4 +2,6 @@ package com.croman.kfood.domain.valueobject
 
 import java.util.UUID
 
-class ProductId(value: UUID): BaseId<UUID>(value)
+class ProductId(value: UUID): BaseId<UUID>(value) {
+    override fun toString() = "ProductId($value)"
+}

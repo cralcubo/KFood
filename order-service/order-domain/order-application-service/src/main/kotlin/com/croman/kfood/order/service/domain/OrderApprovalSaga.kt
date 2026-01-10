@@ -3,16 +3,17 @@ package com.croman.kfood.order.service.domain
 import com.croman.kfood.domain.event.EmptyEvent
 import com.croman.kfood.domain.valueobject.OrderId
 import com.croman.kfood.order.service.domain.dto.message.RestaurantApprovalResponse
-import com.croman.kfood.order.service.domain.entity.CancellableOrder
 import com.croman.kfood.order.service.domain.entity.PaidOrder
 import com.croman.kfood.order.service.domain.event.OrderEvent
 import com.croman.kfood.order.service.domain.exception.OrderNotFoundException
 import com.croman.kfood.order.service.domain.ports.output.repository.OrderRepository
 import com.croman.kfood.saga.SagaStep
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.util.UUID
+import java.util.*
 
+@Component
 class OrderApprovalSaga(
     private val orderDomainService: OrderDomainService,
     private val orderRepository: OrderRepository
@@ -27,7 +28,7 @@ class OrderApprovalSaga(
         val approvedOrder = orderDomainService.approveOrder(order)
         orderRepository.save(approvedOrder)
         logger.info { "Order ${order.id} was approved." }
-        return EmptyEvent()
+        return EmptyEvent() // Empty event because there is nothing more to publish. The Order flow is completed!
     }
 
     @Transactional

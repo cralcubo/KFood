@@ -14,7 +14,7 @@ import java.util.UUID
 @Component
 class PaymentMessagingDataMapper {
 
-    fun PaymentEvent.Completed.toPaymentResponseAvroModel() =
+    fun PaymentEvent.Completed.toPaymentResponseAvroModel(): PaymentResponseAvroModel =
         PaymentResponseAvroModel.newBuilder()
             .setId(UUID.randomUUID().toString())
             .setSagaId("")
@@ -24,9 +24,10 @@ class PaymentMessagingDataMapper {
             .setPrice(currentPayment.price.amount)
             .setCreatedAt(createdAt.toInstant())
             .setPaymentStatus(PaymentStatus.COMPLETED)
+            .setFailureMessages(emptyList())
             .build()
 
-    fun PaymentEvent.Cancelled.toPaymentResponseAvroModel() =
+    fun PaymentEvent.Cancelled.toPaymentResponseAvroModel(): PaymentResponseAvroModel =
         PaymentResponseAvroModel.newBuilder()
             .setId(UUID.randomUUID().toString())
             .setSagaId("")
@@ -36,9 +37,10 @@ class PaymentMessagingDataMapper {
             .setPrice(currentPayment.price.amount)
             .setCreatedAt(createdAt.toInstant())
             .setPaymentStatus(PaymentStatus.CANCELLED)
+            .setFailureMessages(emptyList())
             .build()
 
-    fun PaymentEvent.Failed.toPaymentResponseAvroModel() =
+    fun PaymentEvent.Failed.toPaymentResponseAvroModel(): PaymentResponseAvroModel =
         PaymentResponseAvroModel.newBuilder()
             .setId(UUID.randomUUID().toString())
             .setSagaId("")
