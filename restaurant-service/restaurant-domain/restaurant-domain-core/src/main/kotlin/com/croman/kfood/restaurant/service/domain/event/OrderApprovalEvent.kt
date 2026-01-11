@@ -13,7 +13,7 @@ sealed class OrderApprovalEvent(
     class Approved(orderApproval: OrderApproval.Approved, restaurantId: RestaurantId, createdAt: ZonedDateTime) :
         OrderApprovalEvent(orderApproval, restaurantId, createdAt)
 
-    class Rejected(orderApproval: OrderApproval.Rejected, restaurantId: RestaurantId, createdAt: ZonedDateTime) :
+    class Rejected(orderApproval: OrderApproval.Rejected, restaurantId: RestaurantId, createdAt: ZonedDateTime, val failureMessage: String) :
             OrderApprovalEvent(orderApproval, restaurantId, createdAt)
 
 }

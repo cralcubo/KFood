@@ -10,8 +10,7 @@ import java.util.*
  * - The [customerId] because a user that wants to submit an order, must be an existent user in the system.
  * - The [restaurantId] because if the user will submit an order, it must correspond to a product (food) sold by this restaurant.
  *   Therefore, the restaurant must exist in the system too.
- * - The [price_shouldBeRemoved], this is a bit weird. The price must be actually determined from the information existing in the backend, therefore
- * it does not really make sense that the client send in the command, the price of the product it wants to buy.
+ * - The [paidAmount] is the total price paid when submitting the order.
  * - The [items] are the products the customer wants to order.
  * - The [address] is the delivery address.
  *
@@ -21,8 +20,7 @@ data class CreateOrderCommand(
     val restaurantId: UUID,
     val items: List<OrderItem>,
     val address: OrderAddress,
-
-    val price_shouldBeRemoved: BigDecimal? = null,
+    val paidAmount: BigDecimal,
 )
 
 /**

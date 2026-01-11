@@ -20,7 +20,6 @@ class RestaurantDataAccessMapper {
         val products = restaurantEntity.products.map {
             Product.instantiate(
                 id = ProductId(it.id),
-                name = it.name,
                 price = Money(it.price),
             )
         }

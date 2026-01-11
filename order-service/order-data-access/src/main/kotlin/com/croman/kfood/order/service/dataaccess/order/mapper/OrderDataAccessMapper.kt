@@ -60,13 +60,14 @@ class OrderDataAccessMapper {
             streetAddress = address?.toAddress() ?: error("Address is null"),
             trackingId = TrackingId(trackingId),
             items = items?.map { it.toOrderItem() } ?: error("Items are null"),
+            price = Money(price)
         )
     }
 
     fun OrderItemEntity.toOrderItem() =
         OrderItem.instantiate(
             id = OrderItemId(id),
-            product = Product.instantiate(ProductId(productId), "test", ZERO),
+            product = Product.instantiate(ProductId(productId), ZERO),
             quantity = quantity
         )
 
@@ -95,6 +96,7 @@ class OrderDataAccessMapper {
 
     private fun Order.failureMessage() = when (this) {
         is CancelledOrder -> failureMessages.joinToString()
+        is CancellingOrder -> failureMessages.joinToString()
         else -> ""
     }
 

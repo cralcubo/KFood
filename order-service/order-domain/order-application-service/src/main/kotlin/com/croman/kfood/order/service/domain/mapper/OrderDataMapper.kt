@@ -1,6 +1,7 @@
 package com.croman.kfood.order.service.domain.mapper
 
 import com.croman.kfood.domain.valueobject.CustomerId
+import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.OrderStatus
 import com.croman.kfood.domain.valueobject.RestaurantId
 import com.croman.kfood.order.service.domain.dto.create.CreateOrderCommand
@@ -27,7 +28,8 @@ class OrderDataMapper {
         PendingOrder.create(
             customerId = CustomerId(customerId),
             restaurantId = RestaurantId(restaurantId),
-            streetAddress = address.toStreetAddress()
+            streetAddress = address.toStreetAddress(),
+            price = Money(command.paidAmount)
         )
     }
 

@@ -15,13 +15,9 @@ sealed class Order(
     val customerId: CustomerId, // aggregate
     val restaurantId: RestaurantId, // aggregate
     val streetAddress: StreetAddress, // entity
-    val orderItems: List<OrderItem>
-) : AggregateRoot<OrderId>(id) {
-
+    val orderItems: List<OrderItem>,
     val price: Money
-        get() = orderItems.map { it.subTotal }
-            .reduce { acc, money -> acc.add(money) }
-}
+) : AggregateRoot<OrderId>(id)
 
 sealed class CancellableOrder(
     trackingId: TrackingId,
@@ -30,14 +26,15 @@ sealed class CancellableOrder(
     restaurantId: RestaurantId, // aggregate
     streetAddress: StreetAddress,
     items: List<OrderItem>,
-) : Order(trackingId, id, customerId, restaurantId, streetAddress, items) {
+    price: Money
+) : Order(trackingId, id, customerId, restaurantId, streetAddress, items, price) {
 
     abstract fun cancelOrder(failureMessages: List<String>): CancelledOrder
 
 }
 
 class PaidOrder(order: PendingOrder) :
-    Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems) {
+    Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems, order.price) {
 
     fun approveOrder() =
         ApprovedOrder(this)
@@ -47,7 +44,7 @@ class PaidOrder(order: PendingOrder) :
 }
 
 class ApprovedOrder(order: PaidOrder) :
-    Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems)
+    Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems, order.price)
 
 class CancellingOrder(
     paidOrder: PaidOrder,
@@ -59,6 +56,7 @@ class CancellingOrder(
     paidOrder.restaurantId,
     paidOrder.streetAddress,
     paidOrder.orderItems,
+    paidOrder.price,
 ) {
 
     override fun cancelOrder(failureMessages: List<String>) =
@@ -68,7 +66,7 @@ class CancellingOrder(
 class CancelledOrder(
     val order: CancellableOrder,
     val failureMessages: List<String>,
-) : Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems)
+) : Order(order.trackingId, order.id, order.customerId, order.restaurantId, order.streetAddress, order.orderItems, order.price)
 
 class PendingOrder private constructor(
     id: OrderId,
@@ -77,13 +75,14 @@ class PendingOrder private constructor(
     streetAddress: StreetAddress, // entity
     trackingId: TrackingId,
     items: List<OrderItem>,
-    private val failureMessages: List<String> = emptyList()
-) : CancellableOrder(trackingId, id, customerId, restaurantId, streetAddress, items) {
+    private val failureMessages: List<String> = emptyList(),
+    price: Money
+) : CancellableOrder(trackingId, id, customerId, restaurantId, streetAddress, items, price) {
 
     companion object {
         fun create(
             restaurantId: RestaurantId, customerId: CustomerId,
-            streetAddress: StreetAddress
+            streetAddress: StreetAddress, price: Money
         ) =
             instantiate(
                 id = OrderId(UUID.randomUUID()),
@@ -91,18 +90,20 @@ class PendingOrder private constructor(
                 restaurantId = restaurantId,
                 streetAddress = streetAddress,
                 trackingId = TrackingId(UUID.randomUUID()),
-                items = emptyList()
+                items = emptyList(),
+                price = price
             )
 
         fun instantiate(id: OrderId,restaurantId: RestaurantId, customerId: CustomerId,
-                        streetAddress: StreetAddress, trackingId: TrackingId, items: List<OrderItem>) =
+                        streetAddress: StreetAddress, trackingId: TrackingId, items: List<OrderItem>, price: Money) =
             PendingOrder(
                 id = id,
                 customerId = customerId,
                 restaurantId = restaurantId,
                 streetAddress = streetAddress,
                 trackingId = trackingId,
-                items = items
+                items = items,
+                price = price
             )
 
     }
@@ -123,9 +124,10 @@ class PendingOrder private constructor(
         streetAddress: StreetAddress = this.streetAddress,
         items: List<OrderItem> = this.orderItems,
         trackingId: TrackingId = this.trackingId,
-        failureMessages: List<String> = this.failureMessages
+        failureMessages: List<String> = this.failureMessages,
+        price: Money = this.price
     ) = PendingOrder(
         id, customerId, restaurantId, streetAddress,  items = items,
-        trackingId = trackingId, failureMessages = failureMessages
+        trackingId = trackingId, failureMessages = failureMessages, price = price
     )
 }

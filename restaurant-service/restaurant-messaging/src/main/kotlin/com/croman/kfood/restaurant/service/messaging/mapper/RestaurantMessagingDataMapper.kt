@@ -24,7 +24,10 @@ class RestaurantMessagingDataMapper {
                 is OrderApprovalEvent.Approved -> OrderApprovalStatus.APPROVED
                 is OrderApprovalEvent.Rejected -> OrderApprovalStatus.REJECTED
             })
-            .setFailureMessages(emptyList())
+            .setFailureMessages(when(this) {
+                is OrderApprovalEvent.Rejected -> listOf(failureMessage)
+                is OrderApprovalEvent.Approved -> emptyList()
+            })
             .build()
 
     fun RestaurantApprovalRequestAvroModel.toRequest() =

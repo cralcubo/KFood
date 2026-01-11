@@ -28,7 +28,7 @@ class RestaurantDomainServiceImpl : RestaurantDomainService {
         } catch (e: RestaurantDomainException) {
             logger.error(e) { "The order ${orderDetail.orderId} is invalid. Order rejected!" }
             val rejectOrder = restaurant.rejectOrder(orderDetail)
-            OrderApprovalEvent.Rejected(rejectOrder, restaurant.id, now)
+            OrderApprovalEvent.Rejected(rejectOrder, restaurant.id, now, e.message)
         }
     }
 
