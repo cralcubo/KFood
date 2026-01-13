@@ -4,7 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a70164f3-3640-4b44-ba43-c6e77ce7b994" name="Changes" comment="" />
+    <list default="true" id="a70164f3-3640-4b44-ba43-c6e77ce7b994" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/infraestructure/outbox/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infraestructure/outbox/src/main/kotlin/com/croman/kfood/outbox/OutboxScheduler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infraestructure/outbox/src/main/kotlin/com/croman/kfood/outbox/OutboxStatus.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infraestructure/outbox/src/main/kotlin/com/croman/kfood/outbox/config/SchedulerConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infraestructure/saga/src/main/kotlin/com/croman/kfood/saga/SagaStatus.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/model/approval/OrderApprovalEventPayload.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/model/approval/OrderApprovalEventProduct.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/model/approval/OrderApprovalOutboxMessage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/model/payment/OrderPaymentEventPayload.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/model/payment/OrderPaymentOutboxMessage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/scheduler/payment/PaymentOutboxCleanerScheduler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/scheduler/payment/PaymentOutboxHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/scheduler/payment/PaymentOutboxScheduler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/ports/output/message/publisher/approval/RestaurantApprovalRequestMessagePublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/ports/output/message/publisher/payment/PaymentRequestMessagePublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/ports/output/repository/ApprovalOutboxRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/ports/output/repository/PaymentOutboxRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infraestructure/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/infraestructure/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-container/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-container/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-container/src/main/resources/init-schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-container/src/main/resources/init-schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-domain/order-application-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,11 +87,11 @@
       <recent name="com.croman.kfood.payment.service.messaging.publisher.kafka" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.croman.kfood.order.service.domain.ports.output.message.publisher.approval" />
       <recent name="com.croman.kfood.order.service.domain" />
       <recent name="com.croman.kfood.payment.service.messaging.publisher.kafka" />
       <recent name="com.croman.kfood.payment.service.messaging.listener.kafka" />
       <recent name="com.croman.kfood.payment.service.domain" />
-      <recent name="com.croman.kfood.payment.service.domain.mapper" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.RestaurantServiceApplication">

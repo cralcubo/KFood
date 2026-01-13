@@ -38,6 +38,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- OUTBOX -->
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>outbox</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- SAGA -->
             <dependency>
                 <groupId>com.croman</groupId>
