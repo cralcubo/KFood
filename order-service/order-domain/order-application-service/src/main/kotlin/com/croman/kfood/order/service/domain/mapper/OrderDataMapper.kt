@@ -3,7 +3,9 @@ package com.croman.kfood.order.service.domain.mapper
 import com.croman.kfood.domain.valueobject.CustomerId
 import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.OrderStatus
+import com.croman.kfood.domain.valueobject.PaymentOrderStatus
 import com.croman.kfood.domain.valueobject.RestaurantId
+import com.croman.kfood.domain.valueobject.RestaurantOrderStatus
 import com.croman.kfood.order.service.domain.dto.create.CreateOrderCommand
 import com.croman.kfood.order.service.domain.dto.create.CreateOrderResponse
 import com.croman.kfood.order.service.domain.dto.create.OrderAddress
@@ -12,8 +14,13 @@ import com.croman.kfood.order.service.domain.entity.ApprovedOrder
 import com.croman.kfood.order.service.domain.entity.CancelledOrder
 import com.croman.kfood.order.service.domain.entity.CancellingOrder
 import com.croman.kfood.order.service.domain.entity.Order
+import com.croman.kfood.order.service.domain.entity.OrderItem
 import com.croman.kfood.order.service.domain.entity.PaidOrder
 import com.croman.kfood.order.service.domain.entity.PendingOrder
+import com.croman.kfood.order.service.domain.event.OrderEvent
+import com.croman.kfood.order.service.domain.outbox.model.approval.OrderApprovalEventPayload
+import com.croman.kfood.order.service.domain.outbox.model.approval.OrderApprovalEventProduct
+import com.croman.kfood.order.service.domain.outbox.model.payment.OrderPaymentEventPayload
 import com.croman.kfood.order.service.domain.valueobject.StreetAddress
 import org.springframework.stereotype.Component
 
@@ -53,8 +60,34 @@ class OrderDataMapper {
         )
     }
 
+    fun OrderEvent.Created.toPayload() =
+        OrderPaymentEventPayload(
+            orderId = order.id.value.toString(),
+            customerId = order.customerId.value.toString(),
+            price = order.price.amount,
+            createdAt = createdAt,
+            paymentOrderStatus = PaymentOrderStatus.PENDING.name
+        )
+
+    fun OrderEvent.Paid.toPayload() =
+        OrderApprovalEventPayload(
+            orderId = order.id.value.toString(),
+            restaurantId = order.restaurantId.value.toString(),
+            price = order.price.amount,
+            createdAt = createdAt,
+            restaurantOrderStatus = RestaurantOrderStatus.PAID.name,
+            products = order.orderItems.map { it.toOrderApprovalProducts() }
+        )
+
+    private fun OrderItem.toOrderApprovalProducts() =
+        OrderApprovalEventProduct(
+            id = product.id.value.toString(),
+            quantity = quantity
+        )
+
+
     private fun Order.toOrderStatus() =
-        when(this) {
+        when (this) {
             is ApprovedOrder -> OrderStatus.APPROVED
             is CancelledOrder -> OrderStatus.CANCELLED
             is CancellingOrder -> OrderStatus.CANCELLING

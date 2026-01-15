@@ -47,9 +47,9 @@ class OrderMessagingDataMapper {
             price = price,
             createdAt = createdAt,
             paymentStatus = when(paymentStatus){
-                PaymentStatus.COMPLETED -> COMPLETED
-                PaymentStatus.CANCELLED -> CANCELLED
-                PaymentStatus.FAILED -> FAILED
+                PaymentStatus.COMPLETED -> COMPLETED // payment was successful when an order was created (PENDING)
+                PaymentStatus.CANCELLED -> CANCELLED // payment was cancelled because the order was cancelled (CANCELLED)
+                PaymentStatus.FAILED -> FAILED // completing or cancelling payment Failed!
             },
             failureMessages = failureMessages
         )

@@ -19,7 +19,7 @@ interface PaymentOutboxRepository {
         type: String,
         sagaId: UUID,
         vararg sagaStatus: SagaStatus
-    ): List<OrderPaymentOutboxMessage>
+    ): OrderPaymentOutboxMessage?
 
     fun deleteByTypeAndOutboxStatusAndSagaStatus(
         type: String,

@@ -11,14 +11,14 @@ import org.springframework.validation.annotation.Validated
 @Validated
 class PaymentResponseMessageListenerImpl(
     private val orderPaymentSaga: OrderPaymentSaga,
-    private val orderPaidRestaurantRequestMessagePublisher: OrderPaidRestaurantRequestMessagePublisher
+//    private val orderPaidRestaurantRequestMessagePublisher: OrderPaidRestaurantRequestMessagePublisher
 ): PaymentResponseMessageListener {
     private val logger = KotlinLogging.logger {}
 
     override fun paymentCompleted(response: PaymentResponse) {
-        val orderPaidEvent = orderPaymentSaga.processData(response)
-        logger.info { "Publishing order paid event: $orderPaidEvent for order ${orderPaidEvent.order.id}" }
-        orderPaidRestaurantRequestMessagePublisher.publish(orderPaidEvent)
+        orderPaymentSaga.processData(response)
+        logger.info { "Order ${response.orderId} payment completed successfully." }
+//        orderPaidRestaurantRequestMessagePublisher.publish(orderPaidEvent)
     }
 
     override fun paymentCancelled(response: PaymentResponse) {

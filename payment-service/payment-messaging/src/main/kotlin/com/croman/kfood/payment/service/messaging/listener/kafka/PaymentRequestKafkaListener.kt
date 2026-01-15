@@ -32,11 +32,11 @@ class PaymentRequestKafkaListener(
         logger.info { "${messages.size} number of payment requests received with keys: $keys, partitions: $partitions, offsets: $offsets" }
         messages.forEach {
             when(it.paymentOrderStatus) {
-                PaymentOrderStatus.PENDING -> {
+                PaymentOrderStatus.PENDING -> { // Status when the Order is Created
                     logger.info { "Processing PENDING payment request for order ${it.orderId}" }
                     with(dataMapper) { messageListener.completePayment(it.toPaymentRequest()) }
                 }
-                PaymentOrderStatus.CANCELLED -> {
+                PaymentOrderStatus.CANCELLED -> { // Status when the Order is Cancelled
                     logger.info { "Processing CANCELLED payment request for order ${it.orderId}" }
                     with(dataMapper) { messageListener.cancelPayment(it.toPaymentRequest()) }
                 }

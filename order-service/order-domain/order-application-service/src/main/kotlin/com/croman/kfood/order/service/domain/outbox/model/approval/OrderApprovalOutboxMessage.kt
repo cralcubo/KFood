@@ -10,11 +10,11 @@ data class OrderApprovalOutboxMessage(
     val id: UUID,
     val sagaId: UUID,
     val createdAt: ZonedDateTime,
-    val processedAt: ZonedDateTime,
+    val processedAt: ZonedDateTime? = null,
     val type: String,
     val payload: String,
     val sagaStatus: SagaStatus,
     val orderStatus: OrderStatus,
     val outboxStatus: OutboxStatus,
-    val version: Int,
+    val version: Int? = null,
 )

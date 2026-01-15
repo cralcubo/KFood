@@ -32,11 +32,17 @@ class PaymentRequestMessageListenerImpl(
 
     private val logger = KotlinLogging.logger {}
 
+    /**
+     * function called when the Order is created and is in OrderStatus.PENDING
+     */
     override fun completePayment(paymentRequest: PaymentRequest) {
         val event = completeAndPersistPayment(paymentRequest)
         publishEvent(event)
     }
 
+    /**
+     * function called when the Order was cancelled and is in OrderStatus.CANCELLED
+     */
     override fun cancelPayment(paymentRequest: PaymentRequest) {
         val event = cancelAndPersistPayment(paymentRequest)
         publishEvent(event)

@@ -8,7 +8,8 @@ import com.croman.kfood.domain.event.DomainEvent
  * S represents the Event to be triggered if the step was successful.
  * U represent the Event to be triggered if the step was unsuccessful to proceed with a rollback operation.
  */
-interface SagaStep<T, S: DomainEvent<*>, U: DomainEvent<*>> {
-    fun processData(data: T): S
-    fun rollback(data: T): U
+//interface SagaStep<T, S: DomainEvent<*>, U: DomainEvent<*>>
+interface SagaStep<T> {
+    fun processData(data: T)
+    fun rollback(data: T)
 }

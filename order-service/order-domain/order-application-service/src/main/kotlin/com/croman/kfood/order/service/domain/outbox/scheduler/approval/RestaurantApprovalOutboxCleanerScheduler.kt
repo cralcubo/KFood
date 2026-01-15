@@ -1,4 +1,4 @@
-package com.croman.kfood.order.service.domain.outbox.scheduler.payment
+package com.croman.kfood.order.service.domain.outbox.scheduler.approval
 
 import com.croman.kfood.outbox.OutboxScheduler
 import com.croman.kfood.outbox.OutboxStatus
@@ -8,25 +8,26 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
 @Component
-class PaymentOutboxCleanerScheduler(
-    private val helper: PaymentOutboxHelper
-) : OutboxScheduler {
+class RestaurantApprovalOutboxCleanerScheduler(
+    private val helper: ApprovalOutboxHelper
+): OutboxScheduler {
+
     private val logger = KotlinLogging.logger {}
 
     @Scheduled(cron = "@midnight")
     override fun processMessage() {
-        val messages = helper.findByOutboxStatusAndSagaStatus(
+        val messages = helper.getMessages(
             outboxStatus = OutboxStatus.COMPLETED,
             SagaStatus.SUCCEEDED, SagaStatus.COMPENSATED, SagaStatus.FAILED
         )
         val payloads = messages.joinToString(separator = "\n") { it.payload }
-        logger.info { "Received ${messages.size} OrderPaymentOutboxMessage to clean up. Payloads: $payloads" }
+        logger.info { "Received ${messages.size} OrderApprovalOutboxMessage to clean up. Payloads: $payloads" }
 
         helper.delete(
             outboxStatus = OutboxStatus.COMPLETED,
             SagaStatus.SUCCEEDED, SagaStatus.COMPENSATED, SagaStatus.FAILED
         )
-        logger.info { "${messages.size} OrderPaymentOutboxMessage cleaned up." }
+        logger.info { "${messages.size} OrderApprovalOutboxMessage cleaned up." }
 
 
     }
