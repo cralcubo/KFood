@@ -71,6 +71,7 @@ class PaymentRequestMessageListenerImpl(
 
         val creditHistories = creditHistoryRepository.findByCustomerId(customerId)
             ?: throw PaymentApplicationServiceException("Credit history for customer ${customerId.value} not found.")
+        // This event can only be PaymentEvent.Cancelled
         val event = paymentDomainService.cancelPayment(payment, creditEntry, creditHistories)
 
         paymentRepository.save(event.currentPayment)
@@ -99,6 +100,7 @@ class PaymentRequestMessageListenerImpl(
         val creditHistories = creditHistoryRepository.findByCustomerId(customerId)
             ?: throw PaymentApplicationServiceException("Credit history for customer ${customerId.value} not found.")
 
+        // This event can be PaymentEvent.Completed or Payment.Cancelled (in case of an exception)
         val paymentEvent = paymentDomainService.completePayment(payment, creditEntry, creditHistories)
         paymentRepository.save(paymentEvent.currentPayment)
         if(paymentEvent is PaymentEvent.Completed) {

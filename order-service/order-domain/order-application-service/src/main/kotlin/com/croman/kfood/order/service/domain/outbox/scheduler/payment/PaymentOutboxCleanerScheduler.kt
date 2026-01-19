@@ -15,7 +15,7 @@ class PaymentOutboxCleanerScheduler(
 
     @Scheduled(cron = "@midnight")
     override fun processMessage() {
-        val messages = helper.findByOutboxStatusAndSagaStatus(
+        val messages = helper.getMessages(
             outboxStatus = OutboxStatus.COMPLETED,
             SagaStatus.SUCCEEDED, SagaStatus.COMPENSATED, SagaStatus.FAILED
         )

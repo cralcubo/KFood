@@ -28,6 +28,13 @@ class ApprovalOutboxHelper(
             sagaStatus = sagaStatus
         )
 
+    fun getMessage(sagaId: UUID, vararg sagaStatus: SagaStatus) =
+        repository.findByTypeAndSagaIdAndSagaStatus(
+            type = ORDER_SAGA_NAME,
+            sagaId = sagaId,
+            sagaStatus = sagaStatus
+        )
+
     @Transactional
     fun save(message: OrderApprovalOutboxMessage) =
         repository.save(message)

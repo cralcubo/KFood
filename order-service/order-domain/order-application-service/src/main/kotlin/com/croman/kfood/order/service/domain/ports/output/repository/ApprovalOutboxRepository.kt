@@ -3,7 +3,7 @@ package com.croman.kfood.order.service.domain.ports.output.repository
 import com.croman.kfood.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage
 import com.croman.kfood.outbox.OutboxStatus
 import com.croman.kfood.saga.SagaStatus
-import org.hibernate.validator.constraints.UUID
+import java.util.UUID
 
 interface ApprovalOutboxRepository  {
 
@@ -18,8 +18,8 @@ interface ApprovalOutboxRepository  {
     fun findByTypeAndSagaIdAndSagaStatus(
         type: String,
         sagaId: UUID,
-        sagaStatus: SagaStatus
-    ): List<OrderApprovalOutboxMessage>
+        vararg sagaStatus: SagaStatus
+    ): OrderApprovalOutboxMessage?
 
     fun deleteByTypeAndOutboxStatusAndSagaStatus(
         type: String,

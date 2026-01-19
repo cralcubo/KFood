@@ -1,6 +1,5 @@
 package com.croman.kfood.order.service.domain.outbox.scheduler.payment
 
-import com.croman.kfood.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage
 import com.croman.kfood.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher
 import com.croman.kfood.outbox.OutboxScheduler
 import com.croman.kfood.outbox.OutboxStatus
@@ -9,8 +8,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.util.function.Consumer
-import java.util.stream.Collectors
 
 
 @Component
@@ -28,7 +25,7 @@ class PaymentOutboxScheduler(
     )
     override fun processMessage() {
 
-        // Query all the Outbox Messages concerned with the Payment-Service when the OutboxStatus is STARTED.
+        // Query all the Outbox Messages concerned with Payment when the OutboxStatus is STARTED.
         // There are 2 type of events to be sent to the Payment-Service:
         // OrderCreated and OrderCancelled.
         //  - When an OrderCreated event is sent the Order is in PENDING status.
@@ -36,7 +33,7 @@ class PaymentOutboxScheduler(
         // Those order status are translated to the SagaStatuses:
         // - STARTED
         // - COMPENSATING
-        val messages = helper.findByOutboxStatusAndSagaStatus(
+        val messages = helper.getMessages(
             outboxStatus = OutboxStatus.STARTED,
             SagaStatus.STARTED, SagaStatus.COMPENSATING
         )

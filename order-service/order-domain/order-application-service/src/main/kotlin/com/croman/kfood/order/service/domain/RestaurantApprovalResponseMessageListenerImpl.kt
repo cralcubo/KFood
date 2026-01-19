@@ -12,7 +12,7 @@ import kotlin.math.log
 @Validated
 class RestaurantApprovalResponseMessageListenerImpl(
     private val orderApprovalSaga: OrderApprovalSaga,
-    private val orderCancelledPaymentRequestMessagePublisher: OrderCancelledPaymentRequestMessagePublisher
+//    private val orderCancelledPaymentRequestMessagePublisher: OrderCancelledPaymentRequestMessagePublisher
 ): RestaurantApprovalResponseMessageListener {
     private val logger = KotlinLogging.logger {}
 
@@ -22,8 +22,8 @@ class RestaurantApprovalResponseMessageListenerImpl(
     }
 
     override fun orderRejected(response: RestaurantApprovalResponse) {
-        val event = orderApprovalSaga.rollback(response)
+        orderApprovalSaga.rollback(response)
         logger.info { "Publishing order cancelled event for order ${response.orderId}." }
-        orderCancelledPaymentRequestMessagePublisher.publish(event)
+//        orderCancelledPaymentRequestMessagePublisher.publish(event)
     }
 }

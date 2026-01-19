@@ -79,6 +79,15 @@ class OrderDataMapper {
             products = order.orderItems.map { it.toOrderApprovalProducts() }
         )
 
+    fun OrderEvent.Cancelled.toPayload() =
+        OrderPaymentEventPayload(
+            orderId = order.id.value.toString(),
+            customerId = order.customerId.value.toString(),
+            price = order.price.amount,
+            createdAt = createdAt,
+            paymentOrderStatus = PaymentOrderStatus.CANCELLED.name,
+        )
+
     private fun OrderItem.toOrderApprovalProducts() =
         OrderApprovalEventProduct(
             id = product.id.value.toString(),

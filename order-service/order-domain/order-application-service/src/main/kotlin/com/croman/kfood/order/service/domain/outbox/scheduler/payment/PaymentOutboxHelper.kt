@@ -11,8 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.util.UUID
 
 private const val ORDER_SAGA_NAME = "OrderProcessingSaga"
@@ -25,14 +23,14 @@ class PaymentOutboxHelper(
     private val logger = KotlinLogging.logger {}
 
     @Transactional(readOnly = true) // readOnly: This won't change the state and will only get data
-    fun findByOutboxStatusAndSagaStatus(outboxStatus: OutboxStatus, vararg sagaStatus: SagaStatus) =
+    fun getMessages(outboxStatus: OutboxStatus, vararg sagaStatus: SagaStatus) =
         repository.findByTypeAndOutboxStatusAndSagaStatus(
             type = ORDER_SAGA_NAME,
             outboxStatus, *sagaStatus
         )
 
     @Transactional(readOnly = true)
-    fun findBySagaIdAndSagaStatus(sagaId: UUID, vararg sagaStatus: SagaStatus) =
+    fun getMessage(sagaId: UUID, vararg sagaStatus: SagaStatus) =
         repository.findByTypeAndSagaIdAndSagaStatus(
             type = ORDER_SAGA_NAME,
             sagaId, *sagaStatus
