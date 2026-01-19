@@ -8,7 +8,6 @@ import com.croman.kfood.restaurant.service.domain.event.OrderApprovalEvent
 import com.croman.kfood.restaurant.service.domain.ports.output.message.publisher.OrderApprovedMessagePublisher
 import com.croman.kfood.restaurant.service.messaging.mapper.RestaurantMessagingDataMapper
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.stereotype.Component
 
 @Component
@@ -33,7 +32,7 @@ class OrderApprovedKafkaMessagePublisher(
                 callback = KafkaMessageHelper.kafkaCallback(
                     topic = configData.restaurantApprovalResponseTopicName,
                     orderId = orderId,
-                    message = avroModel
+                    avroMessage = avroModel
                 )
             )
             logger.info { "Successfully published order approved event for order $orderId" }

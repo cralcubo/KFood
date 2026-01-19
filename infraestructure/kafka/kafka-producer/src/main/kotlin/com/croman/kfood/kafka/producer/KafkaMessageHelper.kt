@@ -1,7 +1,7 @@
 package com.croman.kfood.kafka.producer
 
+import com.croman.kfood.outbox.OutboxStatus
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.apache.avro.specific.SpecificRecordBase
 import org.springframework.kafka.support.SendResult
 import java.util.function.BiConsumer
 
@@ -10,11 +10,18 @@ class KafkaMessageHelper {
     companion object {
         private val logger = KotlinLogging.logger {}
 
-        fun<T: SpecificRecordBase> kafkaCallback(topic: String, orderId: String, message: T)
+        fun<T, U> kafkaCallback(
+            topic: String,
+            orderId: String,
+            avroMessage: T,
+            outboxCallback: BiConsumer<U, OutboxStatus>,
+            outboxMessage: U
+        )
                 : BiConsumer<SendResult<String, T>, Throwable?> =
             BiConsumer { result, exception ->
                 if (exception != null) {
-                    logger.error(exception) { "Error while sending $message to topic: $topic " }
+                    logger.error(exception) { "Error while sending $avroMessage to topic: $topic " }
+                    outboxCallback.accept(outboxMessage, OutboxStatus.FAILED)
                 } else {
                     val metadata = result.recordMetadata
                     logger.info {
@@ -24,6 +31,7 @@ class KafkaMessageHelper {
                                 "offset: ${metadata.offset()}, " +
                                 "timestamp: ${metadata.timestamp()}"
                     }
+                    outboxCallback.accept(outboxMessage, OutboxStatus.COMPLETED)
                 }
             }
     }

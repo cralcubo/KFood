@@ -17,11 +17,23 @@ import com.croman.kfood.order.service.domain.dto.message.PaymentResponse
 import com.croman.kfood.order.service.domain.dto.message.RestaurantApprovalResponse
 import com.croman.kfood.order.service.domain.entity.Product
 import com.croman.kfood.order.service.domain.event.OrderEvent
+import com.croman.kfood.order.service.domain.outbox.model.payment.OrderPaymentEventPayload
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class OrderMessagingDataMapper {
+
+    fun OrderPaymentEventPayload.toAvroModel(sagaId: String) =
+        PaymentRequestAvroModel.newBuilder()
+            .setId(UUID.randomUUID().toString())
+            .setSagaId(sagaId)
+            .setCustomerId(customerId)
+            .setOrderId(orderId)
+            .setPrice(price)
+            .setCreatedAt(createdAt.toInstant())
+            .setPaymentOrderStatus(PaymentOrderStatus.valueOf(paymentOrderStatus))
+            .build()
 
     fun RestaurantApprovalResponseAvroModel.toResponse() =
         RestaurantApprovalResponse(

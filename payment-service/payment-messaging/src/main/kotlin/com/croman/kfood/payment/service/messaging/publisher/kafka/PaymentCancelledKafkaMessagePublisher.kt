@@ -30,7 +30,7 @@ class PaymentCancelledKafkaMessagePublisher(
                 callback = KafkaMessageHelper.kafkaCallback(
                     topic = configData.paymentResponseTopicName,
                     orderId = orderId.value.toString(),
-                    message = paymentResponseAvro
+                    avroMessage = paymentResponseAvro
                 )
             )
             logger.info { "Successfully published PaymentResponseAvroModel for order $orderId" }

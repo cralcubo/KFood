@@ -32,7 +32,7 @@ class OrderRejectedKafkaMessagePublisher(
                 callback = KafkaMessageHelper.kafkaCallback(
                     topic = configData.restaurantApprovalResponseTopicName,
                     orderId = orderId,
-                    message = avroModel
+                    avroMessage = avroModel
                 )
             )
             logger.info { "Successfully published order rejected event for order $orderId" }

@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component
 import java.io.Serializable
 import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
+import kotlin.jvm.Throws
 
 interface KafkaProducer<K : Serializable, V : SpecificRecordBase> {
+
+    @Throws(KafkaProducerException::class)
     fun send(topicName: String, key: K, message: V, callback: BiConsumer<SendResult<K, V>, Throwable?>)
 }
 
@@ -22,6 +25,7 @@ class KafkaProducerImpl<K : Serializable, V : SpecificRecordBase>(
 
     private val logger = KotlinLogging.logger {}
 
+    @Throws(KafkaProducerException::class)
     override fun send(
         topicName: String,
         key: K,
