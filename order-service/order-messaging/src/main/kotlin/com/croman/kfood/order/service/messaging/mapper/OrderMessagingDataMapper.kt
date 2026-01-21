@@ -2,21 +2,12 @@ package com.croman.kfood.order.service.messaging.mapper
 
 import com.croman.kfood.domain.valueobject.OrderApprovalStatus.APPROVED
 import com.croman.kfood.domain.valueobject.OrderApprovalStatus.REJECTED
-import com.croman.kfood.domain.valueobject.PaymentStatus.CANCELLED
-import com.croman.kfood.domain.valueobject.PaymentStatus.COMPLETED
-import com.croman.kfood.domain.valueobject.PaymentStatus.FAILED
-import com.croman.kfood.kafka.order.avro.model.OrderApprovalStatus
-import com.croman.kfood.kafka.order.avro.model.PaymentOrderStatus
-import com.croman.kfood.kafka.order.avro.model.PaymentRequestAvroModel
-import com.croman.kfood.kafka.order.avro.model.PaymentResponseAvroModel
-import com.croman.kfood.kafka.order.avro.model.PaymentStatus
-import com.croman.kfood.kafka.order.avro.model.RestaurantApprovalRequestAvroModel
-import com.croman.kfood.kafka.order.avro.model.RestaurantApprovalResponseAvroModel
-import com.croman.kfood.kafka.order.avro.model.RestaurantOrderStatus
+import com.croman.kfood.domain.valueobject.PaymentStatus.*
+import com.croman.kfood.kafka.order.avro.model.*
 import com.croman.kfood.order.service.domain.dto.message.PaymentResponse
 import com.croman.kfood.order.service.domain.dto.message.RestaurantApprovalResponse
-import com.croman.kfood.order.service.domain.entity.Product
-import com.croman.kfood.order.service.domain.event.OrderEvent
+import com.croman.kfood.order.service.domain.outbox.model.approval.OrderApprovalEventPayload
+import com.croman.kfood.order.service.domain.outbox.model.approval.OrderApprovalEventProduct
 import com.croman.kfood.order.service.domain.outbox.model.payment.OrderPaymentEventPayload
 import org.springframework.stereotype.Component
 import java.util.*
@@ -24,7 +15,26 @@ import java.util.*
 @Component
 class OrderMessagingDataMapper {
 
-    fun OrderPaymentEventPayload.toAvroModel(sagaId: String) =
+    fun OrderApprovalEventPayload.toAvroModel(sagaId: String): RestaurantApprovalRequestAvroModel =
+        RestaurantApprovalRequestAvroModel.newBuilder()
+            .setId(UUID.randomUUID().toString())
+            .setSagaId(sagaId)
+            .setRestaurantId(restaurantId)
+            .setOrderId(orderId)
+            .setProducts(products.map { it.toAvroModel() })
+            .setPrice(price)
+            .setCreatedAt(createdAt.toInstant())
+            .setRestaurantOrderStatus(RestaurantOrderStatus.PAID)
+            .build()
+
+    private fun OrderApprovalEventProduct.toAvroModel() =
+        com.croman.kfood.kafka.order.avro.model.Product.newBuilder()
+            .setId(id)
+            .setQuantity(quantity)
+            .build()
+
+
+    fun OrderPaymentEventPayload.toAvroModel(sagaId: String): PaymentRequestAvroModel =
         PaymentRequestAvroModel.newBuilder()
             .setId(UUID.randomUUID().toString())
             .setSagaId(sagaId)
@@ -65,44 +75,4 @@ class OrderMessagingDataMapper {
             },
             failureMessages = failureMessages
         )
-
-    fun OrderEvent.Created.toAvroModel(): PaymentRequestAvroModel =
-        PaymentRequestAvroModel.newBuilder()
-            .setId(UUID.randomUUID().toString())
-            .setSagaId("")
-            .setCustomerId(order.customerId.value.toString())
-            .setOrderId(order.id.value.toString())
-            .setPrice(order.price.amount)
-            .setCreatedAt(createdAt.toInstant())
-            .setPaymentOrderStatus(PaymentOrderStatus.PENDING)
-            .build()
-
-    fun OrderEvent.Cancelled.toAvroModel(): PaymentRequestAvroModel =
-        PaymentRequestAvroModel.newBuilder()
-            .setId(UUID.randomUUID().toString())
-            .setSagaId("")
-            .setCustomerId(order.customerId.value.toString())
-            .setOrderId(order.id.value.toString())
-            .setPrice(order.price.amount)
-            .setCreatedAt(createdAt.toInstant())
-            .setPaymentOrderStatus(PaymentOrderStatus.CANCELLED)
-            .build()
-
-    fun OrderEvent.Paid.toAvroModel(): RestaurantApprovalRequestAvroModel =
-        RestaurantApprovalRequestAvroModel.newBuilder()
-            .setId(UUID.randomUUID().toString())
-            .setSagaId("")
-            .setRestaurantId(order.restaurantId.value.toString())
-            .setOrderId(order.id.value.toString())
-            .setProducts(order.orderItems.map { it.product.toAvroModel(it.quantity) })
-            .setPrice(order.price.amount)
-            .setCreatedAt(createdAt.toInstant())
-            .setRestaurantOrderStatus(RestaurantOrderStatus.PAID)
-            .build()
-
-    private fun Product.toAvroModel(quantity: Int) =
-        com.croman.kfood.kafka.order.avro.model.Product.newBuilder()
-            .setId(id.value.toString())
-            .setQuantity(quantity)
-            .build()
 }
