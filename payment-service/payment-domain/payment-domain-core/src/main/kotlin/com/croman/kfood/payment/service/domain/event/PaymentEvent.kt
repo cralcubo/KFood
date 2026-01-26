@@ -16,7 +16,7 @@ sealed class PaymentEvent(
     class Completed(payment: Payment.Completed, currentCredit: CreditEntry, currentCreditHistories: List<CreditHistory>, createdAt: ZonedDateTime) :
         PaymentEvent(payment, currentCredit, currentCreditHistories, createdAt)
 
-    class Failed(payment: Payment.Failed, currentCredit: CreditEntry, currentCreditHistories: List<CreditHistory>, createdAt: ZonedDateTime, val message: String) :
+    class Failed(payment: Payment.Failed, currentCredit: CreditEntry, currentCreditHistories: List<CreditHistory>, createdAt: ZonedDateTime, val failureMessage: String) :
         PaymentEvent(payment, currentCredit, currentCreditHistories, createdAt)
 
     class Cancelled(payment: Payment.Cancelled, currentCredit: CreditEntry, currentCreditHistories: List<CreditHistory>, createdAt: ZonedDateTime) :

@@ -8,11 +8,25 @@ import com.croman.kfood.kafka.order.avro.model.PaymentResponseAvroModel
 import com.croman.kfood.kafka.order.avro.model.PaymentStatus
 import com.croman.kfood.payment.service.domain.dto.PaymentRequest
 import com.croman.kfood.payment.service.domain.event.PaymentEvent
+import com.croman.kfood.payment.service.domain.outbox.model.OrderEventPayload
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
 class PaymentMessagingDataMapper {
+
+    fun OrderEventPayload.toAvroModel(sagaId: String): PaymentResponseAvroModel =
+        PaymentResponseAvroModel.newBuilder()
+            .setId(UUID.randomUUID().toString())
+            .setSagaId(sagaId)
+            .setPaymentId(paymentId)
+            .setCustomerId(customerId)
+            .setOrderId(orderId)
+            .setPrice(price)
+            .setCreatedAt(createdAt.toInstant())
+            .setPaymentStatus(PaymentStatus.valueOf(paymentOrderStatus))
+            .setFailureMessages(failureMessages)
+            .build()
 
     fun PaymentEvent.Completed.toPaymentResponseAvroModel(): PaymentResponseAvroModel =
         PaymentResponseAvroModel.newBuilder()
@@ -50,7 +64,7 @@ class PaymentMessagingDataMapper {
             .setPrice(currentPayment.price.amount)
             .setCreatedAt(createdAt.toInstant())
             .setPaymentStatus(PaymentStatus.FAILED)
-            .setFailureMessages(listOf(message))
+            .setFailureMessages(listOf(failureMessage))
             .build()
 
     fun PaymentRequestAvroModel.toPaymentRequest() =

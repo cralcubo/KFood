@@ -3,17 +3,19 @@ package com.croman.kfood.payment.service.domain
 import com.croman.kfood.domain.valueobject.CustomerId
 import com.croman.kfood.domain.valueobject.Money
 import com.croman.kfood.domain.valueobject.OrderId
+import com.croman.kfood.domain.valueobject.PaymentStatus
+import com.croman.kfood.outbox.OutboxStatus
 import com.croman.kfood.payment.service.domain.dto.PaymentRequest
 import com.croman.kfood.payment.service.domain.exception.PaymentApplicationServiceException
 import com.croman.kfood.payment.service.domain.port.input.message.listener.PaymentRequestMessageListener
 import com.croman.kfood.payment.service.domain.port.output.repository.CreditEntryRepository
 import com.croman.kfood.payment.service.domain.port.output.repository.CreditHistoryRepository
 import com.croman.kfood.payment.service.domain.port.output.repository.PaymentRepository
-import com.croman.kfood.payment.service.domain.port.output.message.publisher.PaymentCancelledMessagePublisher
-import com.croman.kfood.payment.service.domain.port.output.message.publisher.PaymentCompletedMessagePublisher
-import com.croman.kfood.payment.service.domain.port.output.message.publisher.PaymentFailedMessagePublisher
 import com.croman.kfood.payment.service.domain.entity.Payment
 import com.croman.kfood.payment.service.domain.event.PaymentEvent
+import com.croman.kfood.payment.service.domain.mapper.PaymentDataMapper
+import com.croman.kfood.payment.service.domain.outbox.scheduler.OrderOutboxHelper
+import com.croman.kfood.payment.service.domain.port.output.message.publisher.PaymentResponseMessagePublisher
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,9 +27,9 @@ class PaymentRequestMessageListenerImpl(
     private val paymentRepository: PaymentRepository,
     private val creditHistoryRepository: CreditHistoryRepository,
     private val creditEntryRepository: CreditEntryRepository,
-    private val paymentCompletedMessagePublisher: PaymentCompletedMessagePublisher,
-    private val paymentCancelledMessagePublisher: PaymentCancelledMessagePublisher,
-    private val paymentFailedMessagePublisher: PaymentFailedMessagePublisher,
+    private val orderOutboxHelper: OrderOutboxHelper,
+    private val messagePublisher: PaymentResponseMessagePublisher,
+    private val mapper: PaymentDataMapper
 ): PaymentRequestMessageListener {
 
     private val logger = KotlinLogging.logger {}
@@ -36,26 +38,63 @@ class PaymentRequestMessageListenerImpl(
      * function called when the Order is created and is in OrderStatus.PENDING
      */
     override fun completePayment(paymentRequest: PaymentRequest) {
+        // If the outbox flow is already completed, it means that the more than another request
+        // got to this method, meanwhile a previous request was already successfully processed.
+        // If that is the case, DO NOT restart the outbox flow and return
+        if(publishIfOutboxCompletedPresent(paymentRequest, PaymentStatus.COMPLETED)) {
+            logger.info { "A COMPLETED outbox message with sagaId: ${paymentRequest.sagaId} is already stored in DB" }
+            return
+        }
+
         val event = completeAndPersistPayment(paymentRequest)
-        publishEvent(event)
+
+        // outbox operations
+        // Starting the outbox flow
+        orderOutboxHelper.save(
+            payload = with(mapper) { event.toPayload() },
+            paymentStatus = event.toStatus(),
+            outboxStatus = OutboxStatus.STARTED,
+            sagaId = paymentRequest.sagaId.toUUID(),
+        )
+    }
+
+    private fun publishIfOutboxCompletedPresent(request: PaymentRequest, status: PaymentStatus): Boolean {
+        val completedOutboxMessage = orderOutboxHelper.getCompletedMessage(request.sagaId.toUUID(), status)
+            ?: return false
+        messagePublisher.publish(completedOutboxMessage) { message, status ->
+            orderOutboxHelper.save(
+                message.copy(outboxStatus = status)
+            )
+        }
+        return true
+    }
+
+    private fun PaymentEvent.toStatus() =  when(this) {
+        is PaymentEvent.Cancelled -> PaymentStatus.CANCELLED
+        is PaymentEvent.Completed -> PaymentStatus.COMPLETED
+        is PaymentEvent.Failed -> PaymentStatus.FAILED
     }
 
     /**
      * function called when the Order was cancelled and is in OrderStatus.CANCELLED
      */
     override fun cancelPayment(paymentRequest: PaymentRequest) {
+        if(publishIfOutboxCompletedPresent(paymentRequest, PaymentStatus.CANCELLED)) {
+            logger.info { "A COMPLETED outbox message with sagaId: ${paymentRequest.sagaId} is already stored in DB" }
+            return
+        }
         val event = cancelAndPersistPayment(paymentRequest)
-        publishEvent(event)
+
+        // outbox operations
+        // Starting the outbox flow
+        orderOutboxHelper.save(
+            payload = with(mapper) { event.toPayload() },
+            paymentStatus = event.toStatus(),
+            outboxStatus = OutboxStatus.STARTED,
+            sagaId = paymentRequest.sagaId.toUUID(),
+        )
     }
 
-    private fun publishEvent(event: PaymentEvent) {
-        logger.info { "Publishing event ${event.javaClass.simpleName} for order ${event.currentPayment.orderId}" }
-        when (event) {
-            is PaymentEvent.Cancelled -> paymentCancelledMessagePublisher.publish(event)
-            is PaymentEvent.Completed -> paymentCompletedMessagePublisher.publish(event)
-            is PaymentEvent.Failed -> paymentFailedMessagePublisher.publish(event)
-        }
-    }
 
 
     @Transactional
