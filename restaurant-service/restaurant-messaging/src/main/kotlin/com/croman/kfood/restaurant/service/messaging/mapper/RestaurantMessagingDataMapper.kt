@@ -6,28 +6,22 @@ import com.croman.kfood.kafka.order.avro.model.RestaurantApprovalResponseAvroMod
 import com.croman.kfood.kafka.order.avro.model.RestaurantOrderStatus
 import com.croman.kfood.restaurant.service.domain.dto.OrderProduct
 import com.croman.kfood.restaurant.service.domain.dto.RestaurantApprovalRequest
-import com.croman.kfood.restaurant.service.domain.event.OrderApprovalEvent
+import com.croman.kfood.restaurant.service.domain.outbox.model.OrderEventPayload
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class RestaurantMessagingDataMapper {
 
-    fun OrderApprovalEvent.toAvroModel(): RestaurantApprovalResponseAvroModel =
+    fun OrderEventPayload.toAvroModel(sagaId: String): RestaurantApprovalResponseAvroModel =
         RestaurantApprovalResponseAvroModel.newBuilder()
             .setId(UUID.randomUUID().toString())
-            .setSagaId("")
-            .setOrderId(orderApproval.orderId.value.toString())
-            .setRestaurantId(restaurantId.value.toString())
+            .setSagaId(sagaId)
+            .setOrderId(orderId)
+            .setRestaurantId(restaurantId)
             .setCreatedAt(createdAt.toInstant())
-            .setOrderApprovalStatus(when(this){
-                is OrderApprovalEvent.Approved -> OrderApprovalStatus.APPROVED
-                is OrderApprovalEvent.Rejected -> OrderApprovalStatus.REJECTED
-            })
-            .setFailureMessages(when(this) {
-                is OrderApprovalEvent.Rejected -> listOf(failureMessage)
-                is OrderApprovalEvent.Approved -> emptyList()
-            })
+            .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderApprovalStatus))
+            .setFailureMessages(failureMessages)
             .build()
 
     fun RestaurantApprovalRequestAvroModel.toRequest() =

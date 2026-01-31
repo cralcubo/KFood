@@ -11,6 +11,10 @@
     <dependencies>
         <dependency>
             <groupId>com.croman</groupId>
+            <artifactId>outbox</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.croman</groupId>
             <artifactId>restaurant-application-service</artifactId>
         </dependency>
         <dependency>

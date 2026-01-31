@@ -38,23 +38,22 @@ class PaymentOutboxScheduler(
             SagaStatus.STARTED, SagaStatus.COMPENSATING
         )
 
-        logger.info {
-            "Received ${messages.size} OrderPaymentOutboxMessages with IDs: ${messages.map { it.id }}." +
-                    "Sending to message bus."
-        }
-
-        messages.forEach {
-            messagePublisher.publish(it) { message, status ->
-                helper.save(
-                    message.copy(outboxStatus = status)
-                )
-                logger.info {"Saved updated OrderPaymentOutboxMessage with outbox status: $status " }
+        if(messages.isNotEmpty()) {
+            logger.info {
+                "Received ${messages.size} OrderPaymentOutboxMessages with IDs: ${messages.map { it.id }}." +
+                        "Sending to message bus."
             }
+
+            messages.forEach {
+                messagePublisher.publish(it) { message, status ->
+                    helper.save(
+                        message.copy(outboxStatus = status)
+                    )
+                    logger.info { "Saved updated OrderPaymentOutboxMessage with outbox status: $status " }
+                }
+            }
+
+            logger.info { "${messages.size} OrderPaymentOutboxMessages sent to message bus." }
         }
-
-        logger.info {"${messages.size} OrderPaymentOutboxMessages sent to message bus."}
-
     }
-
-
 }

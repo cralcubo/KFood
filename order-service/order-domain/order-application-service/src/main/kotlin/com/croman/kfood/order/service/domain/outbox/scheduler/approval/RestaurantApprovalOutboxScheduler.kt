@@ -29,22 +29,23 @@ class RestaurantApprovalOutboxScheduler(
             SagaStatus.PROCESSING
         )
 
-        logger.info {
-            "Received ${messages.size} OrderApprovalOutboxMessages with IDs: ${messages.map { it.id }}." +
-                    "Sending to message bus."
-        }
-
-        messages.forEach {
-            messagePublisher.publish(it) { message, status ->
-                helper.save(
-                    message.copy(outboxStatus = status)
-                )
-                logger.info {"Saved updated OrderApprovalOutboxMessages with outbox status: $status " }
+        if(messages.isNotEmpty()) {
+            logger.info {
+                "Received ${messages.size} OrderApprovalOutboxMessages with IDs: ${messages.map { it.id }}." +
+                        "Sending to message bus."
             }
+
+            messages.forEach {
+                messagePublisher.publish(it) { message, status ->
+                    helper.save(
+                        message.copy(outboxStatus = status)
+                    )
+                    logger.info { "Saved updated OrderApprovalOutboxMessages with outbox status: $status " }
+                }
+            }
+
+            logger.info { "${messages.size} OrderApprovalOutboxMessages sent to message bus." }
         }
-
-        logger.info {"${messages.size} OrderApprovalOutboxMessages sent to message bus."}
-
     }
 
 }

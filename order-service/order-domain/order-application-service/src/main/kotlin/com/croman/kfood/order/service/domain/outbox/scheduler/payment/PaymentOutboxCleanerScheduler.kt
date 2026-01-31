@@ -19,16 +19,15 @@ class PaymentOutboxCleanerScheduler(
             outboxStatus = OutboxStatus.COMPLETED,
             SagaStatus.SUCCEEDED, SagaStatus.COMPENSATED, SagaStatus.FAILED
         )
-        val payloads = messages.joinToString(separator = "\n") { it.payload }
-        logger.info { "Received ${messages.size} OrderPaymentOutboxMessage to clean up. Payloads: $payloads" }
+        if(messages.isNotEmpty()) {
+            val payloads = messages.joinToString(separator = "\n") { it.payload }
+            logger.info { "Received ${messages.size} OrderPaymentOutboxMessage to clean up. Payloads: $payloads" }
 
-        helper.delete(
-            outboxStatus = OutboxStatus.COMPLETED,
-            SagaStatus.SUCCEEDED, SagaStatus.COMPENSATED, SagaStatus.FAILED
-        )
-        logger.info { "${messages.size} OrderPaymentOutboxMessage cleaned up." }
-
-
+            helper.delete(
+                outboxStatus = OutboxStatus.COMPLETED,
+                SagaStatus.SUCCEEDED, SagaStatus.COMPENSATED, SagaStatus.FAILED
+            )
+            logger.info { "${messages.size} OrderPaymentOutboxMessage cleaned up." }
+        }
     }
-
 }

@@ -24,17 +24,19 @@ class OrderOutboxScheduler(
     @Transactional
     override fun processMessage() {
         val messages = helper.getMessages(OutboxStatus.STARTED)
-        logger.info { "Retrieved ${messages.size} STARTED OrderOutboxMessage from the outbox table. Sending it to kafka!" }
-        messages.forEach {
-            publisher.publish(
-                message = it,
-                updateMessageCallback = { message, status ->
-                    val updatedMessage = message.copy(outboxStatus = status)
-                    helper.save(updatedMessage)
-                }
-            )
+        if(messages.isNotEmpty()) {
+            logger.info { "Retrieved ${messages.size} STARTED OrderOutboxMessage from the outbox table. Sending it to kafka!" }
+            messages.forEach {
+                publisher.publish(
+                    message = it,
+                    updateMessageCallback = { message, status ->
+                        val updatedMessage = message.copy(outboxStatus = status)
+                        helper.save(updatedMessage)
+                    }
+                )
+            }
+            logger.info { "${messages.size} OrderOutboxMessages sent to kafka" }
         }
-        logger.info { "${messages.size} OrderOutboxMessages sent to kafka" }
     }
 
 }
