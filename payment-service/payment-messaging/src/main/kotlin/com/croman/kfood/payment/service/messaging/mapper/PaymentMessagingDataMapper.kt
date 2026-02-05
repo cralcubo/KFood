@@ -7,10 +7,9 @@ import com.croman.kfood.kafka.order.avro.model.PaymentRequestAvroModel
 import com.croman.kfood.kafka.order.avro.model.PaymentResponseAvroModel
 import com.croman.kfood.kafka.order.avro.model.PaymentStatus
 import com.croman.kfood.payment.service.domain.dto.PaymentRequest
-import com.croman.kfood.payment.service.domain.event.PaymentEvent
 import com.croman.kfood.payment.service.domain.outbox.model.OrderEventPayload
 import org.springframework.stereotype.Component
-import java.util.UUID
+import java.util.*
 
 @Component
 class PaymentMessagingDataMapper {
@@ -26,45 +25,6 @@ class PaymentMessagingDataMapper {
             .setCreatedAt(createdAt.toInstant())
             .setPaymentStatus(PaymentStatus.valueOf(paymentOrderStatus))
             .setFailureMessages(failureMessages)
-            .build()
-
-    fun PaymentEvent.Completed.toPaymentResponseAvroModel(): PaymentResponseAvroModel =
-        PaymentResponseAvroModel.newBuilder()
-            .setId(UUID.randomUUID().toString())
-            .setSagaId("")
-            .setPaymentId(currentPayment.id.value.toString())
-            .setCustomerId(currentPayment.customerId.value.toString())
-            .setOrderId(currentPayment.orderId.value.toString())
-            .setPrice(currentPayment.price.amount)
-            .setCreatedAt(createdAt.toInstant())
-            .setPaymentStatus(PaymentStatus.COMPLETED)
-            .setFailureMessages(emptyList())
-            .build()
-
-    fun PaymentEvent.Cancelled.toPaymentResponseAvroModel(): PaymentResponseAvroModel =
-        PaymentResponseAvroModel.newBuilder()
-            .setId(UUID.randomUUID().toString())
-            .setSagaId("")
-            .setPaymentId(currentPayment.id.value.toString())
-            .setCustomerId(currentPayment.customerId.value.toString())
-            .setOrderId(currentPayment.orderId.value.toString())
-            .setPrice(currentPayment.price.amount)
-            .setCreatedAt(createdAt.toInstant())
-            .setPaymentStatus(PaymentStatus.CANCELLED)
-            .setFailureMessages(emptyList())
-            .build()
-
-    fun PaymentEvent.Failed.toPaymentResponseAvroModel(): PaymentResponseAvroModel =
-        PaymentResponseAvroModel.newBuilder()
-            .setId(UUID.randomUUID().toString())
-            .setSagaId("")
-            .setPaymentId(currentPayment.id.value.toString())
-            .setCustomerId(currentPayment.customerId.value.toString())
-            .setOrderId(currentPayment.orderId.value.toString())
-            .setPrice(currentPayment.price.amount)
-            .setCreatedAt(createdAt.toInstant())
-            .setPaymentStatus(PaymentStatus.FAILED)
-            .setFailureMessages(listOf(failureMessage))
             .build()
 
     fun PaymentRequestAvroModel.toPaymentRequest() =

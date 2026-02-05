@@ -53,6 +53,7 @@ class RestaurantApprovalEventKafkaPublisher(
             logger.info { "Successfully sent RestaurantApprovalResponseAvroModel for order ${payload.orderId} and sagaId $sagaId" }
         }catch (e: Exception) {
             logger.error(e) { "There was an error while sending the RestaurantApprovalResponseAvroModel for order ${payload.orderId} and sagaId $sagaId" }
+            outboxCallback.accept(message, OutboxStatus.FAILED)
         }
     }
 }

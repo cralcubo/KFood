@@ -38,15 +38,18 @@ class PaymentRequestMessageListenerImpl(
      * function called when the Order is created and is in OrderStatus.PENDING
      */
     override fun completePayment(paymentRequest: PaymentRequest) {
-        // If the outbox flow is already completed, it means that the more than another request
-        // got to this method, meanwhile a previous request was already successfully processed.
-        // If that is the case, DO NOT restart the outbox flow and return
+        // The following is a fail case prevention scenario, where the Order Service
+        // for some reason could not process successfully the Payment Completed message. In that case
+        // the order service `may` send another payment request message, but we prevent
+        // deducting the money again, simply republishing the Payment Completed message.
+        // Note: I cannot really see the situation described above, but leaving it here
+        // because is part of the instructor's explanation.
         if(publishIfOutboxCompletedPresent(paymentRequest, PaymentStatus.COMPLETED)) {
             logger.info { "A COMPLETED outbox message with sagaId: ${paymentRequest.sagaId} is already stored in DB" }
             return
         }
 
-        val event = completeAndPersistPayment(paymentRequest)
+        val event = completeAndPersistPayment(paymentRequest) // This could be: PaymentEvent.Completed or Failed
 
         // outbox operations
         // Starting the outbox flow
@@ -59,8 +62,11 @@ class PaymentRequestMessageListenerImpl(
     }
 
     private fun publishIfOutboxCompletedPresent(request: PaymentRequest, status: PaymentStatus): Boolean {
-        val completedOutboxMessage = orderOutboxHelper.getCompletedMessage(request.sagaId.toUUID(), status)
-            ?: return false
+        val completedOutboxMessage = orderOutboxHelper.getCompletedMessage(
+            sagaId = request.sagaId.toUUID(),
+            paymentStatus = status
+        ) ?: return false
+
         messagePublisher.publish(completedOutboxMessage) { message, status ->
             orderOutboxHelper.save(
                 message.copy(outboxStatus = status)
@@ -94,7 +100,6 @@ class PaymentRequestMessageListenerImpl(
             sagaId = paymentRequest.sagaId.toUUID(),
         )
     }
-
 
 
     @Transactional
@@ -139,7 +144,7 @@ class PaymentRequestMessageListenerImpl(
         val creditHistories = creditHistoryRepository.findByCustomerId(customerId)
             ?: throw PaymentApplicationServiceException("Credit history for customer ${customerId.value} not found.")
 
-        // This event can be PaymentEvent.Completed or Payment.Cancelled (in case of an exception)
+        // This event can be PaymentEvent.Completed or Payment.Failed (in case of an exception)
         val paymentEvent = paymentDomainService.completePayment(payment, creditEntry, creditHistories)
         paymentRepository.save(paymentEvent.currentPayment)
         if(paymentEvent is PaymentEvent.Completed) {

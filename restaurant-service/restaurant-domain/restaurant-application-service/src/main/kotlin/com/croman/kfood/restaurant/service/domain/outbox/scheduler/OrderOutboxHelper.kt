@@ -58,8 +58,8 @@ class OrderOutboxHelper(
             OrderOutboxMessage(
                 id = UUID.randomUUID(),
                 sagaId = sagaId,
-                createdAt = ZonedDateTime.now(ZoneId.of("UTC")),
-                processedAt = null,
+                createdAt = payload.createdAt,
+                processedAt = ZonedDateTime.now(ZoneId.of("UTC")),
                 type = ORDER_SAGA_NAME,
                 payload = serializedPayload,
                 outboxStatus = outboxStatus,

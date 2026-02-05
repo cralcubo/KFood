@@ -10,14 +10,13 @@ class KafkaMessageHelper {
     companion object {
         private val logger = KotlinLogging.logger {}
 
-        fun<T, U> kafkaCallback(
+        fun <T, U> kafkaCallback(
             topic: String,
             orderId: String,
             avroMessage: T,
             outboxCallback: BiConsumer<U, OutboxStatus>,
             outboxMessage: U
-        )
-                : BiConsumer<SendResult<String, T>, Throwable?> =
+        ): BiConsumer<SendResult<String, T>, Throwable?> =
             BiConsumer { result, exception ->
                 if (exception != null) {
                     logger.error(exception) { "Error while sending $avroMessage to topic: $topic " }

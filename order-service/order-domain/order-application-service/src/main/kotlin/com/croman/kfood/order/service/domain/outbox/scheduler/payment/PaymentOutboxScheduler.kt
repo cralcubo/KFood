@@ -34,8 +34,9 @@ class PaymentOutboxScheduler(
         // - STARTED
         // - COMPENSATING
         val messages = helper.getMessages(
-            outboxStatus = OutboxStatus.STARTED,
-            SagaStatus.STARTED, SagaStatus.COMPENSATING
+            outboxStatus = OutboxStatus.STARTED, // This is the state when an order is Created
+            SagaStatus.STARTED, // SagaStatus: Started (Corresponds to the start of the happy flow)
+            SagaStatus.COMPENSATING // Compensating (Corresponds to the middle of the unhappy flow where an order is rejected by the Restaurant Service)
         )
 
         if(messages.isNotEmpty()) {
