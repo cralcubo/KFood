@@ -7,7 +7,6 @@
     <name>Archetype - KFood</name>
     <modules>
         <module>order-service</module>
-        <module>order-service/order-data-access</module>
         <module>common</module>
         <module>infraestructure</module>
         <module>infraestructure/kafka</module>
@@ -49,6 +48,38 @@
             <dependency>
                 <groupId>com.croman</groupId>
                 <artifactId>saga</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Customer Service -->
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>customer-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>customer-container</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>customer-data-access</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>customer-domain-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>customer-application-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.croman</groupId>
+                <artifactId>customer-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

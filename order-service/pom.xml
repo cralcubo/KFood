@@ -13,5 +13,6 @@
         <module>order-application</module>
         <module>order-messaging</module>
         <module>order-container</module>
+        <module>order-data-access</module>
     </modules>
 </project>

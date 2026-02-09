@@ -5,12 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70164f3-3640-4b44-ba43-c6e77ce7b994" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/infraestructure/kafka/kafka-producer/src/main/kotlin/com/croman/kfood/kafka/producer/KafkaMessageHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/infraestructure/kafka/kafka-producer/src/main/kotlin/com/croman/kfood/kafka/producer/KafkaMessageHelper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/scheduler/payment/PaymentOutboxScheduler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-domain/order-application-service/src/main/kotlin/com/croman/kfood/order/service/domain/outbox/scheduler/payment/PaymentOutboxScheduler.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/PaymentRequestMessageListenerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service/src/main/kotlin/com/croman/kfood/payment/service/domain/PaymentRequestMessageListenerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/payment-messaging/src/main/kotlin/com/croman/kfood/payment/service/messaging/mapper/PaymentMessagingDataMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/payment-messaging/src/main/kotlin/com/croman/kfood/payment/service/messaging/mapper/PaymentMessagingDataMapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/outbox/scheduler/OrderOutboxHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-domain/restaurant-application-service/src/main/kotlin/com/croman/kfood/restaurant/service/domain/outbox/scheduler/OrderOutboxHelper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/publisher/kafka/RestaurantApprovalEventKafkaPublisher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant-service/restaurant-messaging/src/main/kotlin/com/croman/kfood/restaurant/service/messaging/publisher/kafka/RestaurantApprovalEventKafkaPublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-application/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-application/src/main/kotlin/com/croman/kfood/customer/service/application/handler/CustomerGlobalExceptionHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-application/src/main/kotlin/com/croman/kfood/customer/service/application/rest/CustomerController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-container/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-container/src/main/kotlin/com/croman/kfood/customer/service/CustomerServiceApplication.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-container/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-data-access/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-data-access/src/main/kotlin/com/croman/kfood/customer/service/dataaccess/customer/adapter/CustomerRepositoryImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-data-access/src/main/kotlin/com/croman/kfood/customer/service/dataaccess/customer/entity/CustomerEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-data-access/src/main/kotlin/com/croman/kfood/customer/service/dataaccess/customer/mapper/CustomerDataAccessMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-data-access/src/main/kotlin/com/croman/kfood/customer/service/dataaccess/customer/repository/CustomerJpaRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/CustomerApplicationServiceImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/config/CustomerServiceConfigData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/create/CreateCustomerCommand.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/create/CreateCustomerResponse.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/mapper/CustomerDataMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/ports/input/service/CustomerApplicationService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/ports/output/message/publisher/CustomerMessagePublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-application-service/src/main/kotlin/com/croman/kfood/customer/service/domain/ports/output/repository/CustomerRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-domain-core/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-domain-core/src/main/kotlin/com/croman/kfood/customer/service/domain/CustomerDomainService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-domain-core/src/main/kotlin/com/croman/kfood/customer/service/domain/entity/Customer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-domain-core/src/main/kotlin/com/croman/kfood/customer/service/domain/event/CustomerCreatedEvent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/customer-domain-core/src/main/kotlin/com/croman/kfood/customer/service/domain/exception/CustomerDomainException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-domain/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-messaging/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-messaging/src/main/kotlin/com/croman/kfood/customer/service/messaging/mapper/CustomerMessagingDataMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/customer-messaging/src/main/kotlin/com/croman/kfood/customer/service/messaging/publisher/kafka/CustomerCreatedEventKafkaPublisher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infraestructure/kafka/kafka-model/src/main/resources/avro/customer.avsc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service/src/main/kotlin/com/croman/kfood/customer/service/CustomerServiceApplication.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service/src/main/resources/init-data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/customer-container/src/main/resources/init-data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service/src/main/resources/init-schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/customer-container/src/main/resources/init-schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infraestructure/docker-compose/init_kafka.yml" beforeDir="false" afterPath="$PROJECT_DIR$/infraestructure/docker-compose/init_kafka.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-container/src/main/resources/init-schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-container/src/main/resources/init-schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-data-access/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-data-access/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +56,7 @@
       <list>
         <option value="Kotlin Enum" />
         <option value="Kotlin Data Class" />
+        <option value="Class" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
       </list>
@@ -50,7 +85,7 @@
     &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Debug&quot;,
     &quot;Spring Boot.RestaurantServiceApplication.executor&quot;: &quot;Debug&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;outbox&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;cqrs&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/croman/MyProjects/KFood/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/outbox/approval&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
@@ -67,16 +102,19 @@
       <recent name="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/restaurant" />
       <recent name="$PROJECT_DIR$/order-service/order-data-access/src/main/kotlin/com/croman/kfood/order/service/dataaccess/customer" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/customer-service/container/src/main/resources" />
+    </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="com.croman.kfood.restaurant.service.messaging.publisher.kafka" />
       <recent name="com.croman.kfood.payment.service.messaging.publisher.kafka" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.croman.kfood.customer.service" />
       <recent name="com.croman.kfood.order.service.domain.ports.output.message.publisher.approval" />
       <recent name="com.croman.kfood.order.service.domain" />
       <recent name="com.croman.kfood.payment.service.messaging.publisher.kafka" />
       <recent name="com.croman.kfood.payment.service.messaging.listener.kafka" />
-      <recent name="com.croman.kfood.payment.service.domain" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.RestaurantServiceApplication">
